@@ -27,8 +27,8 @@ public class Book {
         this.numberOfFollowers = numberOfFollowers;
         this.genre = genre;
 
-        setBookCondition();
         setBookFormat();
+        setBookCondition();
 
     }
 
@@ -47,7 +47,9 @@ public class Book {
 
     private void setBookCondition(){
         double pstwo = random.nextDouble();
-        if(pstwo < 0.1){
+        if(bookFormat == BookFormat.Ebook){
+            bookCondition = BookCondition.NotApplicable;
+        } else if (pstwo < 0.1){
             bookCondition = BookCondition.AsNew;
         } else if (pstwo < 0.7) {
             bookCondition = BookCondition.Good;
