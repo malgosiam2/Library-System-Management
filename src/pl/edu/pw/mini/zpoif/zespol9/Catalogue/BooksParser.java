@@ -21,7 +21,6 @@ public class BooksParser {
             scanner.useDelimiter(";");
 
             while (scanner.hasNextLine()) {
-
                 catalogue.add(parseBook(scanner));
                 scanner.nextLine();
 
@@ -39,7 +38,9 @@ public class BooksParser {
 
     private static Book parseBook(Scanner scanner) {
         String title = scanner.next();
-        double bookRating = scanner.nextDouble();
+        //double bookRating = scanner.nextDouble(); // zmieniłam bo wyrzucało wyjątek przy parsowaniu typu double!!!
+        String book = scanner.next();
+        double bookRating = Double.parseDouble(book.replaceAll(",", "."));
         String author = scanner.next();
         int bookRatingCount = scanner.nextInt();
         int bookReviewCount = scanner.nextInt();
