@@ -13,4 +13,8 @@ public class Reader extends Person {
     private Map<Book, LocalDate> checkedOutBooks;
     private List<Book> toReadBooks;
 
+    public Reader(){
+        this.signInData.setLogin("r" + this.signInData.getLogin());
+    }
+
 }

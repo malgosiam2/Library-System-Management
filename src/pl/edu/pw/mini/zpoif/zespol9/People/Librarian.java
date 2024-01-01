@@ -6,4 +6,8 @@ public class Librarian extends Person {
 
     private SystemAccess systemAccess;
 
+    public Librarian(){
+        this.signInData.setLogin("l" + this.signInData.getLogin());
+    }
+
 }
