@@ -3,6 +3,7 @@ package pl.edu.pw.mini.zpoif.zespol9.People;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +14,15 @@ public class Reader extends Person {
     private Map<Book, LocalDate> checkedOutBooks;
     private List<Book> toReadBooks;
 
+    private static List<Reader> readerList = new ArrayList<>();
+
     public Reader(){
         this.signInData.setLogin("r" + this.signInData.getLogin());
+        readerList.add(this);
     }
 
+
+    public static List<Reader> getReaderList() {
+        return readerList;
+    }
 }
