@@ -5,6 +5,7 @@ import pl.edu.pw.mini.zpoif.zespol9.System.CatalogueAccess;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,5 +28,10 @@ public class Reader extends Person {
 
     public static List<Reader> getReaderList() {
         return readerList;
+    }
+
+    public void reserveBook(Book book){
+        book.available = false;
+        reservedBooks.add(book);
     }
 }

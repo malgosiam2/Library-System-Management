@@ -49,4 +49,7 @@ public class Catalogue {
         return listByTitle;
     }
 
+    public static List<Book> getCatalogue() {
+        return catalogue;
+    }
 }
