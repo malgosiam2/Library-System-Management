@@ -10,6 +10,8 @@ public class Reader extends Person {
 
     private List<Book> reservedBooks = new ArrayList<>();
     private double fine;
+    private String name;
+    private String surname;
     private Map<Book, LocalDate> checkedOutBooks = new LinkedHashMap<>();
     private List<Book> toReadBooks = new ArrayList<>();
     private static CatalogueAccess catalogueAccess;
