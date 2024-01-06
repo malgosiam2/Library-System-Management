@@ -34,4 +34,20 @@ public class Reader extends Person {
         book.available = false;
         reservedBooks.add(book);
     }
+
+    public List<Book> getReservedBooks() {
+        return reservedBooks;
+    }
+
+    public double getFine() {
+        return fine;
+    }
+
+    public Map<Book, LocalDate> getCheckedOutBooks() {
+        return checkedOutBooks;
+    }
+
+    public List<Book> getToReadBooks() {
+        return toReadBooks;
+    }
 }
