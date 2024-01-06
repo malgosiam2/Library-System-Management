@@ -11,7 +11,8 @@ public class Librarian extends Person {
 
     private static List<Librarian> librarianList = new ArrayList<>();
 
-    public Librarian() {
+    public Librarian(String name, String surname) {
+        super(name, surname);
         this.signInData.setLogin("l" + this.signInData.getLogin());
         librarianList.add(this);
     }

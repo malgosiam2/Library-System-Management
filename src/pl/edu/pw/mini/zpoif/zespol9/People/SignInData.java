@@ -1,34 +1,37 @@
 package pl.edu.pw.mini.zpoif.zespol9.People;
 
-import java.security.SecureRandom;
 import java.util.Random;
 
 public class SignInData {
 
+    private static Random random = new Random();
+
+
+    private String name;
+    private String surname;
+
     private String login;
     private String password;
+    private final int id;
+    private static int count = 10;
 
-    public SignInData() {
-
-        this.login = generateLogin();
+    public SignInData(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+        id = count;
+        random.setSeed(100 + count);
         this.password = generatePassword();
+        count++;
+        this.login = generateLogin();
     }
 
     private String generatePassword() {
-        return login + generateRandomString();
+        return generateRandomString();
     }
 
     private String generateLogin() {
-        Random random = new Random();
 
-        StringBuilder loginBuilder = new StringBuilder();
-
-        for (int i = 0; i < 10; i++) {
-            int randomDigit = random.nextInt(10);
-            loginBuilder.append(randomDigit);
-        }
-
-        return loginBuilder.toString();
+        return name + surname + id;
     }
 
     public String getLogin() {
@@ -40,12 +43,12 @@ public class SignInData {
     }
 
     private static String generateRandomString() {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder randomString = new StringBuilder(10);
 
-        SecureRandom secureRandom = new SecureRandom();
-        for (int i = 0; i < 10; i++) {
-            int randomIndex = secureRandom.nextInt(characters.length());
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder randomString = new StringBuilder(4);
+
+        for (int i = 0; i < 5; i++) {
+            int randomIndex = random.nextInt(characters.length());
             randomString.append(characters.charAt(randomIndex));
         }
         return randomString.toString();

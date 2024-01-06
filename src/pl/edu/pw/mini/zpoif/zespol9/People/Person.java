@@ -3,10 +3,13 @@ package pl.edu.pw.mini.zpoif.zespol9.People;
 public class Person {
 
     protected SignInData signInData;
+    private String name;
+    private String surname;
 
-    public Person() {
-
-        this.signInData = new SignInData();
+    public Person(String name, String surname) {
+        this.signInData = new SignInData(name, surname);
+        this.name = name;
+        this.surname = surname;
     }
 
     public SignInData getSignInData() {
