@@ -17,11 +17,16 @@ public class LokigGui extends JFrame {
     public LokigGui() {
         setTitle("Sign In Panel");
         setVisible(true);
-        setSize(new Dimension(350, 150));
+        setSize(new Dimension(500, 200));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        setLayout(null);
+        JLabel background = new JLabel(new ImageIcon("resources/LogingPanelBackground.png"));
+        background.setBounds(0, 0, getWidth(), getHeight());
+        add(background);
+
         JPanel panel = new JPanel();
-        //panel.setSize(new Dimension(200, 100));
+        panel.setOpaque(false);
         panel.setLayout(new GridLayout(3, 3));
 
         JLabel loginLabel = new JLabel("Login:");
@@ -82,9 +87,12 @@ public class LokigGui extends JFrame {
             }
         });
         panel.add(loginButton);
-        add(panel);
+        panel.setBounds(110, 40, 250, 100);
+        background.add(panel);
+
         setLocationRelativeTo(null);
         setResizable(false);
+        setVisible(true);
 
     }
 
@@ -93,12 +101,12 @@ public class LokigGui extends JFrame {
         if (user.equalsIgnoreCase("librarian")){
             window = new JFrame("Librarian window");
         }else {
-            window = new JFrame("Reader window");
+            window = new ReaderWindow();
         }
 
-        window.setVisible(true);
-        window.setSize(new Dimension(1000, 600));
-        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        window.setVisible(true);
+//        window.setSize(new Dimension(1000, 600));
+//        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {
