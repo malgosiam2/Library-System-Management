@@ -10,24 +10,16 @@ public class Reader extends Person {
 
     private List<Book> reservedBooks = new ArrayList<>();
     private double fine;
-    private String name;
-    private String surname;
     private Map<Book, LocalDate> checkedOutBooks = new LinkedHashMap<>();
     private List<Book> toReadBooks = new ArrayList<>();
     private static CatalogueAccess catalogueAccess;
 
-    private static List<Reader> readerList = new ArrayList<>();
-
-    public Reader(CatalogueAccess catalogueAccess) {
+    public Reader(String name, String surname, CatalogueAccess catalogueAccess) {
+        super(name, surname);
         this.signInData.setLogin("r" + this.signInData.getLogin());
         this.catalogueAccess = catalogueAccess;
-        readerList.add(this);
     }
 
-
-    public static List<Reader> getReaderList() {
-        return readerList;
-    }
 
     public void reserveBook(Book book) {
         book.available = false;

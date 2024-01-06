@@ -14,8 +14,11 @@ public class LokigGui extends JFrame {
 
     private JTextField loginField;
     private JPasswordField passwordField;
+    private LibrarySystem librarySystem;
 
-    public LokigGui() {
+    public LokigGui(LibrarySystem librarySystem) {
+        this.librarySystem = librarySystem;
+
         setTitle("Sign In Panel");
         setVisible(true);
         setSize(new Dimension(500, 200));
@@ -49,7 +52,7 @@ public class LokigGui extends JFrame {
                 String passwordUsedForSigning = String.valueOf(passwordField.getPassword());
 
                 if (loginUsedForSigning.startsWith("r")) {
-                    List<Reader> tmpList = Reader.getReaderList();
+                    List<Reader> tmpList = librarySystem.getReaderList();
 
                     for (Reader el : tmpList) {
                         if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
@@ -102,24 +105,21 @@ public class LokigGui extends JFrame {
         if (user.equalsIgnoreCase("librarian")) {
             window = new JFrame("Librarian window");
         } else {
-            window = new ReaderWindow();
+            window = new ReaderWindow(librarySystem);
         }
 
-//        window.setVisible(true);
-//        window.setSize(new Dimension(1000, 600));
-//        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public static void main(String[] args) {
-        LibrarySystem system = new LibrarySystem();
-        for (int i = 0; i < 7; i++) {
-            Reader reader = new Reader(system);
-            //Librarian librarian = new Librarian();
-            System.out.println(reader.getSignInData().getLogin());
-            System.out.println(reader.getSignInData().getPassword());
-        }
-
-        LokigGui lokigGui = new LokigGui();
-    }
+//    public static void main(String[] args) {
+//        LibrarySystem system = new LibrarySystem();
+//        for (int i = 0; i < 7; i++) {
+//            Reader reader = new Reader(system);
+//            //Librarian librarian = new Librarian();
+//            System.out.println(reader.getSignInData().getLogin());
+//            System.out.println(reader.getSignInData().getPassword());
+//        }
+//
+//        LokigGui lokigGui = new LokigGui();
+//    }
 }
 
