@@ -4,17 +4,14 @@ import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 import pl.edu.pw.mini.zpoif.zespol9.System.CatalogueAccess;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Reader extends Person {
 
-    private List<Book> reservedBooks;
+    private List<Book> reservedBooks = new ArrayList<>();
     private double fine;
-    private Map<Book, LocalDate> checkedOutBooks;
-    private List<Book> toReadBooks;
+    private Map<Book, LocalDate> checkedOutBooks = new LinkedHashMap<>();
+    private List<Book> toReadBooks = new ArrayList<>();
     private static CatalogueAccess catalogueAccess;
 
     private static List<Reader> readerList = new ArrayList<>();
@@ -49,5 +46,11 @@ public class Reader extends Person {
 
     public List<Book> getToReadBooks() {
         return toReadBooks;
+    }
+
+    public void postponeReturnDate(Book book){
+        LocalDate returnDate = checkedOutBooks.get(book);
+        LocalDate newReturnDate = returnDate.plusDays(30);
+        checkedOutBooks.put(book, newReturnDate);
     }
 }
