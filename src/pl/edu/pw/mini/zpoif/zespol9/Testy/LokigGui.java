@@ -2,6 +2,7 @@ package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
 import pl.edu.pw.mini.zpoif.zespol9.People.Librarian;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
+import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -102,8 +103,9 @@ public class LokigGui extends JFrame {
     }
 
     public static void main(String[] args) {
+        LibrarySystem system = new LibrarySystem();
         for (int i = 0; i < 7; i ++){
-            Reader reader = new Reader();
+            Reader reader = new Reader(system);
             //Librarian librarian = new Librarian();
             System.out.println(reader.getSignInData().getLogin());
             System.out.println(reader.getSignInData().getPassword());
