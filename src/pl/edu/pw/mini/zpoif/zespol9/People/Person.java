@@ -4,7 +4,7 @@ public class Person {
 
     protected SignInData signInData;
 
-    public Person(){
+    public Person() {
 
         this.signInData = new SignInData();
     }

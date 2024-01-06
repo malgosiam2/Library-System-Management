@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class BooksParser {
 
-    public static List<Book> parseBooks(){
+    public static List<Book> parseBooks() {
         List<Book> catalogue = new ArrayList<>();
         Path pathToFile = Paths.get("resources/BooksData.csv");
 
