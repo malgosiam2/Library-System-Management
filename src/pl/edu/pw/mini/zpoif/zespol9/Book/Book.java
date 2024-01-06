@@ -6,6 +6,8 @@ public class Book {
 
     private Random random = new Random();
 
+    public final int id;
+    private static int count = 1;
     public String title;
     public String author;
     public String description;
@@ -16,6 +18,7 @@ public class Book {
     public int numberOfFollowers;
     public Genre genre;
     public BookCondition bookCondition;
+    public boolean available = true;
 
     public Book(String title, String author, String description, double bookRating, int bookRatingCount, int bookReviewCount, int numberOfFollowers, Genre genre) {
         this.title = title;
@@ -26,7 +29,8 @@ public class Book {
         this.bookReviewCount = bookReviewCount;
         this.numberOfFollowers = numberOfFollowers;
         this.genre = genre;
-
+        id = count;
+        count++;
         setBookFormat();
         setBookCondition();
 
