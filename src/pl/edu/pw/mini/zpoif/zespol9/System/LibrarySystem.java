@@ -14,36 +14,25 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
     private Librarian librarian = new Librarian("Bilbo", "Baggins");
 
     public LibrarySystem(){
-        createLibrarian();
         createReaders();
-    }
-
-    private void createLibrarian() {
-        System.out.println(librarian.getSignInData().getLogin());
-        System.out.println(librarian.getSignInData().getPassword());
     }
 
     private void createReaders() {
         Reader reader1 = new Reader("Harry", "Potter", this);
         readerList.add(reader1);
-        System.out.println(reader1.getSignInData().getLogin());
-        System.out.println(reader1.getSignInData().getPassword());
+
         Reader reader2 = new Reader("Herkules", "Poirot", this);
         readerList.add(reader2);
-        System.out.println(reader2.getSignInData().getLogin());
-        System.out.println(reader2.getSignInData().getPassword());
+
         Reader reader3 = new Reader("Anna", "Shirley", this);
         readerList.add(reader3);
-        System.out.println(reader3.getSignInData().getLogin());
-        System.out.println(reader3.getSignInData().getPassword());
+
         Reader reader4 = new Reader("Romeo", "Monteki", this);
         readerList.add(reader4);
-        System.out.println(reader4.getSignInData().getLogin());
-        System.out.println(reader4.getSignInData().getPassword());
+
         Reader reader5 = new Reader("Jo", "March", this);
         readerList.add(reader5);
-        System.out.println(reader5.getSignInData().getLogin());
-        System.out.println(reader5.getSignInData().getPassword());
+
 
     }
 
