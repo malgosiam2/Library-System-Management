@@ -8,17 +8,17 @@ public class SignInData {
     private String login;
     private String password;
 
-    public SignInData(){
+    public SignInData() {
 
         this.login = generateLogin();
         this.password = generatePassword();
     }
 
-    private String generatePassword(){
+    private String generatePassword() {
         return login + generateRandomString();
     }
 
-    private String generateLogin(){
+    private String generateLogin() {
         Random random = new Random();
 
         StringBuilder loginBuilder = new StringBuilder();
@@ -51,7 +51,7 @@ public class SignInData {
         return randomString.toString();
     }
 
-    public void setLogin(String login){
+    public void setLogin(String login) {
         this.login = login;
     }
 }

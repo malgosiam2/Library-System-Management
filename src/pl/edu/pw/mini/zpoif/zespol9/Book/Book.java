@@ -36,9 +36,9 @@ public class Book {
 
     }
 
-    private void setBookFormat(){
+    private void setBookFormat() {
         double pstwo = random.nextDouble();
-        if (pstwo < 0.4){
+        if (pstwo < 0.4) {
             bookFormat = BookFormat.Softback;
         } else if (pstwo < 0.7) {
             bookFormat = BookFormat.Hardcover;
@@ -49,15 +49,15 @@ public class Book {
         }
     }
 
-    private void setBookCondition(){
+    private void setBookCondition() {
         double pstwo = random.nextDouble();
-        if(bookFormat == BookFormat.Ebook){
+        if (bookFormat == BookFormat.Ebook) {
             bookCondition = BookCondition.NotApplicable;
-        } else if (pstwo < 0.1){
+        } else if (pstwo < 0.1) {
             bookCondition = BookCondition.AsNew;
         } else if (pstwo < 0.7) {
             bookCondition = BookCondition.Good;
-        } else if (pstwo < 0.95){
+        } else if (pstwo < 0.95) {
             bookCondition = BookCondition.Poor;
         } else {
             bookCondition = BookCondition.Damaged;

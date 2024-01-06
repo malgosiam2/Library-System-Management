@@ -18,7 +18,7 @@ public class Reader extends Person {
 
     private static List<Reader> readerList = new ArrayList<>();
 
-    public Reader(CatalogueAccess catalogueAccess){
+    public Reader(CatalogueAccess catalogueAccess) {
         this.signInData.setLogin("r" + this.signInData.getLogin());
         this.catalogueAccess = catalogueAccess;
         readerList.add(this);
@@ -29,7 +29,7 @@ public class Reader extends Person {
         return readerList;
     }
 
-    public void reserveBook(Book book){
+    public void reserveBook(Book book) {
         book.available = false;
         reservedBooks.add(book);
     }
@@ -50,7 +50,7 @@ public class Reader extends Person {
         return toReadBooks;
     }
 
-    public void postponeReturnDate(Book book){
+    public void postponeReturnDate(Book book) {
         LocalDate returnDate = checkedOutBooks.get(book);
         LocalDate newReturnDate = returnDate.plusDays(30);
         checkedOutBooks.put(book, newReturnDate);

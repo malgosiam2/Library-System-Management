@@ -15,7 +15,7 @@ public class Main {
 
         List<Book> catalogue = BooksParser.parseBooks();
 
-        for(Book book : catalogue){
+        for (Book book : catalogue) {
             System.out.println(book.toString());
         }
 

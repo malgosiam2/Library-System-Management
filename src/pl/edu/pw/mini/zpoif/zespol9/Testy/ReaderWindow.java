@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class ReaderWindow extends JFrame {
 
-    public ReaderWindow(){
+    public ReaderWindow() {
         setTitle("Reader Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(1000, 800));

@@ -11,7 +11,7 @@ public class Librarian extends Person {
 
     private static List<Librarian> librarianList = new ArrayList<>();
 
-    public Librarian(){
+    public Librarian() {
         this.signInData.setLogin("l" + this.signInData.getLogin());
         librarianList.add(this);
     }
