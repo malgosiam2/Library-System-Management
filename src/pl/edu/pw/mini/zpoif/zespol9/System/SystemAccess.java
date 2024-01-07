@@ -5,6 +5,8 @@ import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 
 public interface SystemAccess {
     Catalogue getCatalogue();
+
     void setCatalogue(Catalogue catalogue);
+
     Reader getReader(String login);
 }

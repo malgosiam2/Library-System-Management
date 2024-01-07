@@ -1,23 +1,16 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
-import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
-import pl.edu.pw.mini.zpoif.zespol9.Catalogue.BooksParser;
-
-import java.util.List;
+import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
 
 public class Main {
 
-    //Main na potrzeby testów
-
     public static void main(String[] args) {
 
-        // DZIALA!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        LibrarySystem librarySystem = new LibrarySystem();
 
-        List<Book> catalogue = BooksParser.parseBooks();
+        LokigGui lokigGui = new LokigGui(librarySystem);
 
-        for(Book book : catalogue){
-            System.out.println(book.toString());
-        }
+
 
     }
 }

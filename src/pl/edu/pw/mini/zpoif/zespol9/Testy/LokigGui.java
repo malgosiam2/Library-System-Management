@@ -14,8 +14,11 @@ public class LokigGui extends JFrame {
 
     private JTextField loginField;
     private JPasswordField passwordField;
+    private LibrarySystem librarySystem;
 
-    public LokigGui() {
+    public LokigGui(LibrarySystem librarySystem) {
+        this.librarySystem = librarySystem;
+
         setTitle("Sign In Panel");
         setVisible(true);
         setSize(new Dimension(500, 200));
@@ -48,16 +51,16 @@ public class LokigGui extends JFrame {
                 String loginUsedForSigning = loginField.getText();
                 String passwordUsedForSigning = String.valueOf(passwordField.getPassword());
 
-                if (loginUsedForSigning.startsWith("r")){
-                    List<Reader> tmpList = Reader.getReaderList();
+                if (loginUsedForSigning.startsWith("r")) {
+                    List<Reader> tmpList = librarySystem.getReaderList();
 
-                    for (Reader el: tmpList){
-                        if (el.getSignInData().getLogin().equals(loginUsedForSigning)){
-                            if (el.getSignInData().getPassword().equals(passwordUsedForSigning)){
+                    for (Reader el : tmpList) {
+                        if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
+                            if (el.getSignInData().getPassword().equals(passwordUsedForSigning)) {
                                 addNewWindow("reader");
                                 dispose();
 
-                            }else {
+                            } else {
                                 //odmowa dostepu
                                 JOptionPane.showMessageDialog(LokigGui.this, "SO SORRY CANNOT SIGN IN BYE");
                             }
@@ -65,16 +68,16 @@ public class LokigGui extends JFrame {
                         }
                     }
 
-                }else if (loginUsedForSigning.startsWith("l")){
+                } else if (loginUsedForSigning.startsWith("l")) {
                     List<Librarian> tmpList = Librarian.getLibrarianList();
 
-                    for (Librarian el: tmpList){
-                        if (el.getSignInData().getLogin().equals(loginUsedForSigning)){
-                            if (el.getSignInData().getPassword().equals(passwordUsedForSigning)){
+                    for (Librarian el : tmpList) {
+                        if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
+                            if (el.getSignInData().getPassword().equals(passwordUsedForSigning)) {
                                 addNewWindow("librarian");
                                 dispose();
 
-                            }else {
+                            } else {
                                 //odmowa dostepu
                                 JOptionPane.showMessageDialog(LokigGui.this, "SO SORRY CANNOT SIGN IN BYE");
                             }
@@ -82,7 +85,7 @@ public class LokigGui extends JFrame {
                         }
                     }
 
-                }else {
+                } else {
                     JOptionPane.showMessageDialog(LokigGui.this, "SO SORRY CANNOT SIGN IN BYE");
                 }
             }
@@ -97,29 +100,26 @@ public class LokigGui extends JFrame {
 
     }
 
-    private void addNewWindow(String user){
+    private void addNewWindow(String user) {
         JFrame window;
-        if (user.equalsIgnoreCase("librarian")){
+        if (user.equalsIgnoreCase("librarian")) {
             window = new JFrame("Librarian window");
-        }else {
-            window = new ReaderWindow();
+        } else {
+            window = new ReaderWindow(librarySystem);
         }
 
-//        window.setVisible(true);
-//        window.setSize(new Dimension(1000, 600));
-//        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public static void main(String[] args) {
-        LibrarySystem system = new LibrarySystem();
-        for (int i = 0; i < 7; i ++){
-            Reader reader = new Reader(system);
-            //Librarian librarian = new Librarian();
-            System.out.println(reader.getSignInData().getLogin());
-            System.out.println(reader.getSignInData().getPassword());
-        }
-
-        LokigGui lokigGui = new LokigGui();
-    }
+//    public static void main(String[] args) {
+//        LibrarySystem system = new LibrarySystem();
+//        for (int i = 0; i < 7; i++) {
+//            Reader reader = new Reader(system);
+//            //Librarian librarian = new Librarian();
+//            System.out.println(reader.getSignInData().getLogin());
+//            System.out.println(reader.getSignInData().getPassword());
+//        }
+//
+//        LokigGui lokigGui = new LokigGui();
+//    }
 }
 
