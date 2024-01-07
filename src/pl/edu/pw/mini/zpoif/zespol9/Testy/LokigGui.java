@@ -33,16 +33,24 @@ public class LokigGui extends JFrame {
         panel.setOpaque(false);
         panel.setLayout(new GridLayout(3, 3));
 
+        Font font = new Font("Serif", Font.BOLD, 17);
+        Font font1 = new Font("Serif", Font.PLAIN, 14);
+
         JLabel loginLabel = new JLabel("Login:");
+        loginLabel.setFont(font);
         loginField = new JTextField("");
         passwordField = new JPasswordField("");
         panel.add(loginLabel);
         panel.add(loginField);
+
         JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setFont(font);
         panel.add(passwordLabel);
         panel.add(passwordField);
 
         JButton loginButton = new JButton("Sign In");
+        loginButton.setFont(font1);
+        loginButton.setBackground(new Color(238, 232, 223));
         //loginButton.setBounds(200, 20, 10, 2);
         //panel.add(loginButton, GroupLayout.DEFAULT_SIZE);
         loginButton.addActionListener(new ActionListener() {
@@ -91,7 +99,7 @@ public class LokigGui extends JFrame {
             }
         });
         panel.add(loginButton);
-        panel.setBounds(110, 40, 250, 100);
+        panel.setBounds(120, 42, 250, 100);
         background.add(panel);
 
         setLocationRelativeTo(null);
@@ -110,16 +118,5 @@ public class LokigGui extends JFrame {
 
     }
 
-//    public static void main(String[] args) {
-//        LibrarySystem system = new LibrarySystem();
-//        for (int i = 0; i < 7; i++) {
-//            Reader reader = new Reader(system);
-//            //Librarian librarian = new Librarian();
-//            System.out.println(reader.getSignInData().getLogin());
-//            System.out.println(reader.getSignInData().getPassword());
-//        }
-//
-//        LokigGui lokigGui = new LokigGui();
-//    }
 }
 

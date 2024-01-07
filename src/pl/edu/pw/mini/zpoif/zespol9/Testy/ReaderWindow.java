@@ -39,25 +39,30 @@ public class ReaderWindow extends JFrame {
 
         // dodajemy lewy panel z zakładkami:
         JPanel leftPanel = new JPanel(new FlowLayout());
-        leftPanel.setBackground(new Color(188, 122, 47));
+        leftPanel.setBackground(new Color(206, 190, 170, 255));
         leftPanel.setPreferredSize(new Dimension(180, 0));
 
-
+        Font fontTab = new Font("Serif", Font.BOLD, 18);
         JButton jButton1 = new JButton("Catalogue");
+        jButton1.setFont(fontTab);
+        jButton1.setForeground(new Color(239, 221, 191, 255));
         JButton jButton2 = new JButton("My Account");
+        jButton2.setFont(fontTab);
+        jButton2.setForeground(new Color(239, 221, 191, 255));
+
 
         JPanel rightPanel = new JPanel();
 
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                implementCatalogue(leftPanel);
+                rightPanel.removeAll();
+                implementCatalogue();
 
                 // implement
 
             }
         });
-
 
         jButton2.addActionListener(new ActionListener() {
             @Override
@@ -68,12 +73,10 @@ public class ReaderWindow extends JFrame {
             }
         });
 
-
-
         jButton2.setPreferredSize(new Dimension(160, 50));
         jButton1.setPreferredSize(new Dimension(160, 50));
-        jButton1.setBackground(new Color(188, 122, 47));
-        jButton2.setBackground(new Color(188, 122, 47));
+        jButton1.setBackground(new Color(107, 79, 51));
+        jButton2.setBackground(new Color(107, 79, 51));
 
         leftPanel.add(jButton1);
         leftPanel.add(jButton2);
@@ -87,8 +90,82 @@ public class ReaderWindow extends JFrame {
         setVisible(true);
     }
 
-    private void implementCatalogue(JPanel jPanel) {
-        jPanel.setBackground(Color.yellow);
+    private void implementCatalogue() {
+        JPanel rightPanel = (JPanel) getContentPane().getComponent(2);
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPane.setBackground(new Color(206, 190, 170, 255));
+        JPanel upperPanel = new JPanel();
+        JScrollPane scrollPane = new JScrollPane();
+
+        upperPanel.setSize(new Dimension(920, 200));
+        upperPanel.setBackground(new Color(238, 232, 223, 255));
+        upperPanel.setLayout(null);
+
+        scrollPane.setSize(new Dimension(920, 600));
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        // upperPanel with search option
+        JLabel labelTextCatalogue = new JLabel();
+        labelTextCatalogue.setSize(new Dimension(910, 50));
+        labelTextCatalogue.setText("<HTML>Explore our library catalog to discover our extensive collection of books.<br>  Select a category to browse and find the literary treasures housed in our library.</HTML>");
+        Font font = new Font("Serif", Font.BOLD, 15);
+        labelTextCatalogue.setFont(font);
+        labelTextCatalogue.setBounds(5, 4, 910, 60);
+        upperPanel.add(labelTextCatalogue);
+
+        // search by title
+        JLabel titleSearchLabel = new JLabel("Search by title: ");
+        JTextField titleSearchField = new JTextField("");
+        JButton titleSearchButton = new JButton("Search");
+
+        titleSearchLabel.setBounds(5, 70, 100, 25);
+        titleSearchField.setBounds(115, 70, 230, 25);
+        titleSearchButton.setBounds(355, 70, 80, 25 );
+
+        titleSearchLabel.setFont(font);
+        titleSearchButton.setFont(font);
+
+        upperPanel.add(titleSearchLabel);
+        upperPanel.add(titleSearchField);
+        upperPanel.add(titleSearchButton);
+        // end search by title
+
+        // search by author
+        JLabel authorSearchLabel = new JLabel("Search by author: ");
+        JTextField authorSearchField = new JTextField("");
+        JButton authorSearchButton = new JButton("Search");
+
+        authorSearchLabel.setBounds(5, 100, 100, 25);
+        authorSearchField.setBounds(115, 100, 230, 25);
+        authorSearchButton.setBounds(355, 100, 80, 25 );
+
+        authorSearchLabel.setFont(font);
+        authorSearchField.setFont(font);
+
+        upperPanel.add(authorSearchLabel);
+        upperPanel.add(authorSearchField);
+        upperPanel.add(authorSearchButton);
+        // end search by author
+
+
+
+
+
+        splitPane.setTopComponent(upperPanel);
+        splitPane.setBottomComponent(scrollPane);
+
+        splitPane.getTopComponent().setMinimumSize(new Dimension(0, 200));
+        splitPane.getTopComponent().setMaximumSize(new Dimension(920, 200));
+
+        splitPane.setEnabled(false);
+        splitPane.setResizeWeight(0.0);
+        splitPane.setOneTouchExpandable(false);
+        splitPane.setDividerSize(5);
+
+        rightPanel.add(splitPane, BorderLayout.CENTER);
+        rightPanel.revalidate();
+        rightPanel.repaint();
     }
 
     private void implementAccount() {
