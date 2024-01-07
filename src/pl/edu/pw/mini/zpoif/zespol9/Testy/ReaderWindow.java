@@ -109,8 +109,8 @@ public class ReaderWindow extends JFrame {
         JPanel lowerPanel = new JPanel();
 
         upperPanel.setBackground(new Color(232, 169, 61));
-        upperPanel.setSize(new Dimension(920, 400));
-        lowerPanel.setLayout(new GridLayout(1, 3));
+        upperPanel.setSize(new Dimension(920, 300));
+        lowerPanel.setLayout(new GridLayout(3, 1));
         lowerPanel.setBackground(Color.CYAN);
 
         JPanel reservedBooksPanel = new JPanel();
@@ -158,7 +158,28 @@ public class ReaderWindow extends JFrame {
 
         // reserved books:
 
+        List<Book> reservedList = this.myReader.getReservedBooks();
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evlerngree", "wegrnjerg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("egr4t23vree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evregegree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("eveegree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhruheefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evree", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
+        reservedList.add(new Book("evrw[rkwee", "werg bowhefowefh", "ddd", 2.3, 3, 3, 3, Genre.history));
 
+        reservedBooksPanel.add(new JLabel("Reserved Books: "));
+
+        checkedOutBooksPanel.add(new JLabel("Checked Out Books: "));
+
+        toReadBooksPanel.add(new JLabel("To Read Books: "));
 
 
         splitPane.setTopComponent(upperPanel);
