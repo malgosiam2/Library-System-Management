@@ -338,18 +338,18 @@ public class ReaderWindow extends JFrame {
         JPanel upperPanel = new JPanel();
         JPanel lowerPanel = new JPanel();
 
-        upperPanel.setBackground(new Color(232, 169, 61));
-        upperPanel.setSize(new Dimension(920, 250));
+        upperPanel.setBackground(new Color(206, 190, 170, 255));
+        upperPanel.setSize(new Dimension(920, 200));
         lowerPanel.setLayout(new GridLayout(3, 1));
 
         JPanel reservedBooksPanel = new JPanel();
-        reservedBooksPanel.setBackground(new Color(255, 210, 131));
+        reservedBooksPanel.setBackground(new Color(238, 232, 223, 255));
         lowerPanel.add(reservedBooksPanel);
         JPanel checkedOutBooksPanel = new JPanel();
-        checkedOutBooksPanel.setBackground(new Color(255, 210, 131));
+        checkedOutBooksPanel.setBackground(new Color(238, 232, 223, 255));
         lowerPanel.add(checkedOutBooksPanel);
         JPanel toReadBooksPanel = new JPanel();
-        toReadBooksPanel.setBackground(new Color(255, 210, 131));
+        toReadBooksPanel.setBackground(new Color(238, 232, 223, 255));
         lowerPanel.add(toReadBooksPanel);
 
         Font font = new Font("MV Boli", Font.BOLD, 18);
@@ -388,8 +388,10 @@ public class ReaderWindow extends JFrame {
         // reserved books:
 
         reservedBooksPanel.setLayout(new FlowLayout());
-        reservedBooksPanel.setBackground(new Color(255, 210, 131));
-        reservedBooksPanel.add(new JLabel("Reserved Books: "));
+        reservedBooksPanel.setBackground(new Color(238, 232, 223, 255));
+        JLabel jReserved = new JLabel("Reserved Books:");
+        jReserved.setFont(font1);
+        reservedBooksPanel.add(jReserved);
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
         for (Book el: myReader.getReservedBooks()){
@@ -402,14 +404,16 @@ public class ReaderWindow extends JFrame {
         JScrollPane scrollPane1 = new JScrollPane(elementList);
         scrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane1.setPreferredSize(new Dimension(800, 100));
-        scrollPane1.getViewport().setBackground(new Color(255, 210, 131));
+        scrollPane1.getViewport().setBackground(new Color(238, 232, 223, 255));
         scrollPane1.setViewportBorder(BorderFactory.createEmptyBorder());
-        elementList.setBackground(new Color(255, 210, 131));
+        elementList.setBackground(new Color(238, 232, 223, 255));
         reservedBooksPanel.add(scrollPane1);
 
 
         //checked out books:
-        checkedOutBooksPanel.add(new JLabel("Checked Out Books: "));
+        JLabel jCheckedOut = new JLabel("Checked Out Books: ");
+        jCheckedOut.setFont(font1);
+        checkedOutBooksPanel.add(jCheckedOut);
         checkedOutBooksPanel.setLayout(new FlowLayout());
 
         Map<Book, LocalDate> mapaReader = myReader.getCheckedOutBooks();
@@ -462,14 +466,16 @@ public class ReaderWindow extends JFrame {
         JScrollPane scrollPane3 = new JScrollPane(elementList3);
         scrollPane3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane3.setPreferredSize(new Dimension(800, 100));
-        scrollPane3.getViewport().setBackground(new Color(255, 210, 131));
-        scrollPane3.setViewportBorder(BorderFactory.createLineBorder(new Color(255, 210, 131), 2));
-        elementList3.setBackground(new Color(255, 210, 131));
+        scrollPane3.getViewport().setBackground(new Color(238, 232, 223, 255));
+        scrollPane3.setViewportBorder(BorderFactory.createLineBorder(new Color(238, 232, 223, 255), 2));
+        elementList3.setBackground(new Color(238, 232, 223, 255));
         checkedOutBooksPanel.add(scrollPane3);
 
 
         //to read:
-        toReadBooksPanel.add(new JLabel("To Read Books: "));
+        JLabel jRead = new JLabel("To Read Books: ");
+        jRead.setFont(font1);
+        toReadBooksPanel.add(jRead);
         toReadBooksPanel.setLayout(new FlowLayout());
         List<Book> toReadList = this.myReader.getToReadBooks();
         DefaultListModel<String> listModel1 = new DefaultListModel<>();
@@ -483,9 +489,9 @@ public class ReaderWindow extends JFrame {
         JScrollPane scrollPane2 = new JScrollPane(elementList2);
         scrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane2.setPreferredSize(new Dimension(800, 100));
-        scrollPane2.getViewport().setBackground(new Color(255, 210, 131));
-        scrollPane2.setViewportBorder(BorderFactory.createLineBorder(new Color(255, 210, 131), 2));
-        elementList2.setBackground(new Color(255, 210, 131));
+        scrollPane2.getViewport().setBackground(new Color(238, 232, 223, 255));
+        scrollPane2.setViewportBorder(BorderFactory.createLineBorder(new Color(238, 232, 223, 255), 2));
+        elementList2.setBackground(new Color(238, 232, 223, 255));
         toReadBooksPanel.add(scrollPane2);
 
 
