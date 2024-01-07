@@ -1,5 +1,7 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
+import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +15,7 @@ import java.io.IOException;
 
 public class ReaderWindow extends JFrame {
 
-    public ReaderWindow(){
+    public ReaderWindow(LibrarySystem librarySystem){
 
         setTitle("Reader Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -156,7 +158,4 @@ public class ReaderWindow extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        ReaderWindow readerWindow = new ReaderWindow();
-    }
 }
