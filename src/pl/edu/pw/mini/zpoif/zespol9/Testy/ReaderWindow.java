@@ -2,6 +2,7 @@ package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
+import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
 
 import javax.imageio.ImageIO;
@@ -18,7 +19,11 @@ import java.io.IOException;
 
 public class ReaderWindow extends JFrame {
 
-    public ReaderWindow(LibrarySystem librarySystem){
+    private Reader myReader;
+
+    public ReaderWindow(LibrarySystem librarySystem, Reader reader){
+
+        this.myReader = reader;
 
         setTitle("Reader Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

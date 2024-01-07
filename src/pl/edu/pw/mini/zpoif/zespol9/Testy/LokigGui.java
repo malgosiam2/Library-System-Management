@@ -114,7 +114,7 @@ public class LokigGui extends JFrame {
         if (user.equalsIgnoreCase("librarian")) {
             window = new JFrame("Librarian window");
         } else {
-            window = new ReaderWindow(librarySystem);
+            window = new ReaderWindow(librarySystem, (Reader) person);
         }
 
     }
