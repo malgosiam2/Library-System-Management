@@ -10,7 +10,7 @@ public class Catalogue {
 
     private static List<Book> catalogue = BooksParser.parseBooks();
 
-    private static List<Book> searchByAuthor(String author) {
+    public static List<Book> searchByAuthor(String author) {
         List<Book> listByAuthor = new LinkedList<>();
         catalogue.forEach(book -> {
             if (book.author.equalsIgnoreCase(author)) {
@@ -29,7 +29,7 @@ public class Catalogue {
 
     }
 
-    private static List<Book> searchByGenre(Genre genre) {
+    public static List<Book> searchByGenre(Genre genre) {
         List<Book> listByGenre = new LinkedList<>();
         catalogue.forEach(book -> {
             if (book.genre == genre) {
@@ -39,7 +39,7 @@ public class Catalogue {
         return listByGenre;
     }
 
-    private static List<Book> searchByTitle(String title) {
+    public static List<Book> searchByTitle(String title) {
         List<Book> listByTitle = new LinkedList<>();
         catalogue.forEach(book -> {
             if (book.title.equalsIgnoreCase(title)) {

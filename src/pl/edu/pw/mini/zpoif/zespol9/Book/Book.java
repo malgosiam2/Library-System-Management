@@ -18,9 +18,10 @@ public class Book {
     public int numberOfFollowers;
     public Genre genre;
     public BookCondition bookCondition;
-    public boolean available = true;
+    public Status status;
 
-    public Book(String title, String author, String description, double bookRating, int bookRatingCount, int bookReviewCount, int numberOfFollowers, Genre genre) {
+    public Book(String title, String author, String description, double bookRating, int bookRatingCount,
+                int bookReviewCount, int numberOfFollowers, Genre genre) {
         this.title = title;
         this.author = author;
         this.description = description;
@@ -33,6 +34,7 @@ public class Book {
         count++;
         setBookFormat();
         setBookCondition();
+        setStatus();
 
     }
 
@@ -64,18 +66,23 @@ public class Book {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", description='" + description + '\'' +
-                ", bookFormat=" + bookFormat +
-                ", bookRating=" + bookRating +
-                ", bookRatingCount=" + bookRatingCount +
-                ", bookReviewCount=" + bookReviewCount +
-                ", genre=" + genre +
-                ", bookCondition=" + bookCondition +
-                '}';
+    private void setStatus() {
+        double pstwo = random.nextDouble();
+        if (bookFormat == BookFormat.Ebook) {
+            status = Status.Available;
+        } else if (pstwo < 0.2) {
+            status = Status.CheckOut;
+        } else if (pstwo < 0.4) {
+            status = Status.Reserved;
+        } else {
+            status = Status.Available;
+        }
+    }
+
+    public String toStringCatalogue() {
+        return "<HTML>Title: '" + title + "',   author: " + author +
+                ",   genre: " + genre + ",<br>format: " + bookFormat +
+                ",   rating: " + bookRating +
+                ",   status: " + status + "</HTML>";
     }
 }

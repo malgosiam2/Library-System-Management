@@ -1,6 +1,7 @@
 package pl.edu.pw.mini.zpoif.zespol9.People;
 
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
+import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
 import pl.edu.pw.mini.zpoif.zespol9.System.CatalogueAccess;
 
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ public class Reader extends Person {
 
 
     public void reserveBook(Book book) {
-        book.available = false;
+        book.status = Status.Reserved;
         reservedBooks.add(book);
     }
 
