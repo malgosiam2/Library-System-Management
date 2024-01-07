@@ -1,5 +1,6 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
+import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
 
 import javax.imageio.ImageIO;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 
 
 
@@ -60,7 +62,6 @@ public class ReaderWindow extends JFrame {
                 implementCatalogue();
 
                 // implement
-
             }
         });
 
@@ -119,9 +120,9 @@ public class ReaderWindow extends JFrame {
         JTextField titleSearchField = new JTextField("");
         JButton titleSearchButton = new JButton("Search");
 
-        titleSearchLabel.setBounds(5, 70, 100, 25);
-        titleSearchField.setBounds(115, 70, 230, 25);
-        titleSearchButton.setBounds(355, 70, 80, 25 );
+        titleSearchLabel.setBounds(5, 70, 120, 25);
+        titleSearchField.setBounds(135, 70, 230, 25);
+        titleSearchButton.setBounds(375, 70, 80, 25 );
 
         titleSearchLabel.setFont(font);
         titleSearchButton.setFont(font);
@@ -136,9 +137,9 @@ public class ReaderWindow extends JFrame {
         JTextField authorSearchField = new JTextField("");
         JButton authorSearchButton = new JButton("Search");
 
-        authorSearchLabel.setBounds(5, 100, 100, 25);
-        authorSearchField.setBounds(115, 100, 230, 25);
-        authorSearchButton.setBounds(355, 100, 80, 25 );
+        authorSearchLabel.setBounds(5, 100, 120, 25);
+        authorSearchField.setBounds(135, 100, 230, 25);
+        authorSearchButton.setBounds(375, 100, 80, 25 );
 
         authorSearchLabel.setFont(font);
         authorSearchField.setFont(font);
@@ -148,8 +149,26 @@ public class ReaderWindow extends JFrame {
         upperPanel.add(authorSearchButton);
         // end search by author
 
+        // search by genre
+        Genre[] options = new Genre[Genre.values().length + 1];
+        options[0] = null;
+        System.arraycopy(Genre.values(), 0, options, 1, Genre.values().length);
 
+        JLabel genreSearchLabel = new JLabel("Search by genre: ");
+        JComboBox<Genre> genreJComboBox = new JComboBox<>(options);
+        JButton genreSearchButton = new JButton("Search");
 
+        genreSearchLabel.setBounds(5, 130, 120, 25);
+        genreJComboBox.setBounds(135, 130, 230, 25);
+        genreSearchButton.setBounds(375, 130, 80, 25 );
+
+        genreSearchLabel.setFont(font);
+        authorSearchField.setFont(font);
+
+        upperPanel.add(genreSearchLabel);
+        upperPanel.add(genreJComboBox);
+        upperPanel.add(genreSearchButton);
+        // end search by genre
 
 
         splitPane.setTopComponent(upperPanel);
