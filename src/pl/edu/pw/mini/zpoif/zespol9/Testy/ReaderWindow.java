@@ -65,6 +65,10 @@ public class ReaderWindow extends JFrame {
         jButton2.setFont(fontTab);
         jButton2.setForeground(new Color(239, 221, 191, 255));
 
+        JButton logOutButton = new JButton("Log Out");
+        logOutButton.setFont(fontTab);
+        logOutButton.setForeground(new Color(239, 221, 191, 255));
+
 
         JPanel rightPanel = new JPanel();
 
@@ -87,13 +91,24 @@ public class ReaderWindow extends JFrame {
             }
         });
 
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LokigGui lokigGui = new LokigGui(librarySystem);
+                dispose();
+            }
+        });
+
         jButton2.setPreferredSize(new Dimension(160, 50));
         jButton1.setPreferredSize(new Dimension(160, 50));
+        logOutButton.setPreferredSize(new Dimension(160, 50));
         jButton1.setBackground(new Color(107, 79, 51));
         jButton2.setBackground(new Color(107, 79, 51));
+        logOutButton.setBackground(new Color(107, 79, 51));
 
         leftPanel.add(jButton1);
         leftPanel.add(jButton2);
+        leftPanel.add(logOutButton);
         rightPanel.setLayout(new BorderLayout());
 
         setLayout(new BorderLayout());
