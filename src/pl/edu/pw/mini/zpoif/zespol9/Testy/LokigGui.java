@@ -4,6 +4,7 @@ import pl.edu.pw.mini.zpoif.zespol9.People.Librarian;
 import pl.edu.pw.mini.zpoif.zespol9.People.Person;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
+import pl.edu.pw.mini.zpoif.zespol9.System.PasswordCheckInterfejs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,13 +66,14 @@ public class LokigGui extends JFrame {
 
                     for (Reader el : tmpList) {
                         if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
-                            if (el.getSignInData().getPassword().equals(passwordUsedForSigning)) {
+
+                            if (el.getSignInData().isPasswordCorrect(passwordUsedForSigning)) {
                                 addNewWindow("reader", el);
                                 dispose();
 
                             } else {
                                 //odmowa dostepu
-                                JOptionPane.showMessageDialog(LokigGui.this, "SO SORRY CANNOT SIGN IN BYE");
+                                JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                             }
                             break;
                         }
@@ -82,20 +84,20 @@ public class LokigGui extends JFrame {
 
                     for (Librarian el : tmpList) {
                         if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
-                            if (el.getSignInData().getPassword().equals(passwordUsedForSigning)) {
+                            if (el.getSignInData().isPasswordCorrect(passwordUsedForSigning)) {
                                 addNewWindow("librarian", el);
                                 dispose();
 
                             } else {
                                 //odmowa dostepu
-                                JOptionPane.showMessageDialog(LokigGui.this, "SO SORRY CANNOT SIGN IN BYE");
+                                JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                             }
                             break;
                         }
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(LokigGui.this, "SO SORRY CANNOT SIGN IN BYE");
+                    JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                 }
             }
         });

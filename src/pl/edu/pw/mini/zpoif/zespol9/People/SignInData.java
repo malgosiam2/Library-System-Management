@@ -1,8 +1,10 @@
 package pl.edu.pw.mini.zpoif.zespol9.People;
 
+import pl.edu.pw.mini.zpoif.zespol9.System.PasswordCheckInterfejs;
+
 import java.util.Random;
 
-public class SignInData {
+public class SignInData implements PasswordCheckInterfejs {
 
     private static Random random = new Random();
 
@@ -38,10 +40,6 @@ public class SignInData {
         return login;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     private static String generateRandomString() {
 
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -56,5 +54,11 @@ public class SignInData {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    @Override
+    public boolean isPasswordCorrect(String string) {
+        if (this.password.equals(string)) return true;
+        return false;
     }
 }
