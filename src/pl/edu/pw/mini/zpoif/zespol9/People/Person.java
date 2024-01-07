@@ -12,6 +12,14 @@ public class Person {
         this.surname = surname;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
     public SignInData getSignInData() {
         return signInData;
     }

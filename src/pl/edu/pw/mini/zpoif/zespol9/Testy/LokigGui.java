@@ -1,6 +1,7 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
 import pl.edu.pw.mini.zpoif.zespol9.People.Librarian;
+import pl.edu.pw.mini.zpoif.zespol9.People.Person;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
 
@@ -57,7 +58,7 @@ public class LokigGui extends JFrame {
                     for (Reader el : tmpList) {
                         if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
                             if (el.getSignInData().getPassword().equals(passwordUsedForSigning)) {
-                                addNewWindow("reader");
+                                addNewWindow("reader", el);
                                 dispose();
 
                             } else {
@@ -74,7 +75,7 @@ public class LokigGui extends JFrame {
                     for (Librarian el : tmpList) {
                         if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
                             if (el.getSignInData().getPassword().equals(passwordUsedForSigning)) {
-                                addNewWindow("librarian");
+                                addNewWindow("librarian", el);
                                 dispose();
 
                             } else {
@@ -100,12 +101,12 @@ public class LokigGui extends JFrame {
 
     }
 
-    private void addNewWindow(String user) {
+    private void addNewWindow(String user, Person person) {
         JFrame window;
         if (user.equalsIgnoreCase("librarian")) {
             window = new JFrame("Librarian window");
         } else {
-            window = new ReaderWindow(librarySystem);
+            window = new ReaderWindow(librarySystem, (Reader) person);
         }
 
     }

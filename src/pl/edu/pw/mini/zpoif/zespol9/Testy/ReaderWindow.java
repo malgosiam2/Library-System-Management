@@ -1,6 +1,12 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
+import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
+import pl.edu.pw.mini.zpoif.zespol9.Book.BookCondition;
+import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
+import pl.edu.pw.mini.zpoif.zespol9.People.Librarian;
+import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
+import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,17 +16,21 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ReaderWindow extends JFrame {
 
-    public ReaderWindow(LibrarySystem librarySystem){
+    private Reader myReader;
+
+    public ReaderWindow(LibrarySystem librarySystem, Reader reader){
+        this.myReader = reader;
 
         setTitle("Reader Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(1000, 800));
-
 
         //dodajemy panel górny z obrazkiem:
         JPanel imagePanel = new JPanel();
@@ -99,7 +109,7 @@ public class ReaderWindow extends JFrame {
         JPanel lowerPanel = new JPanel();
 
         upperPanel.setBackground(new Color(232, 169, 61));
-        upperPanel.setSize(new Dimension(920, 500));
+        upperPanel.setSize(new Dimension(920, 400));
         lowerPanel.setLayout(new GridLayout(1, 3));
         lowerPanel.setBackground(Color.CYAN);
 
@@ -113,34 +123,43 @@ public class ReaderWindow extends JFrame {
         toReadBooksPanel.setBackground(new Color(255, 210, 131));
         lowerPanel.add(toReadBooksPanel);
 
-        Font font = new Font("MV Boli", Font.BOLD, 20);
+        Font font = new Font("MV Boli", Font.BOLD, 18);
+        Font font1 = new Font("Ariel", Font.BOLD, 16);
 
         // panel na gorze:
         upperPanel.setLayout(new GridLayout(4, 2));
         JLabel nameLabel = new JLabel("Name:");
         nameLabel.setFont(font);
         upperPanel.add(nameLabel);
-        upperPanel.add(new JLabel());
+        JLabel j1 = new JLabel(this.myReader.getName());
+        j1.setFont(font1);
+        upperPanel.add(j1);
 
         JLabel surnameLabel = new JLabel("Surname:");
         surnameLabel.setFont(font);
         upperPanel.add(surnameLabel);
-        upperPanel.add(new JLabel());
+        JLabel j2 = new JLabel(this.myReader.getSurname());
+        j2.setFont(font1);
+        upperPanel.add(j2);
 
         JLabel loginLabel = new JLabel("Login:");
         loginLabel.setFont(font);
         upperPanel.add(loginLabel);
-        upperPanel.add(new JLabel());
+        JLabel j3 = new JLabel(this.myReader.getSignInData().getLogin());
+        j3.setFont(font1);
+        upperPanel.add(j3);
 
         JLabel fineLabel = new JLabel("Fine:");
         fineLabel.setFont(font);
         upperPanel.add(fineLabel);
-        upperPanel.add(new JLabel());
+        JLabel j4 = new JLabel(String.valueOf(this.myReader.getFine()));
+        j4.setFont(font1);
+        upperPanel.add(j4);
 
         // reserved books:
 
 
-        //
+
 
         splitPane.setTopComponent(upperPanel);
         splitPane.setBottomComponent(lowerPanel);
