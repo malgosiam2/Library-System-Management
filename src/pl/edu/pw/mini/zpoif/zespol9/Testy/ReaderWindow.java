@@ -1,5 +1,6 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
+import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
 
@@ -29,7 +30,6 @@ public class ReaderWindow extends JFrame {
         imagePanel.setPreferredSize(new Dimension(1000, 100));
         try {
             BufferedImage image = ImageIO.read(new File("resources/WelcomeBack.png"));
-            Graphics2D g2d = image.createGraphics();
 
             ImageIcon imageIcon = new ImageIcon(image);
             JLabel imageLabel = new JLabel(imageIcon);
@@ -59,7 +59,7 @@ public class ReaderWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rightPanel.removeAll();
-                implementCatalogue();
+                implementCatalogue(librarySystem);
 
                 // implement
             }
@@ -91,7 +91,7 @@ public class ReaderWindow extends JFrame {
         setVisible(true);
     }
 
-    private void implementCatalogue() {
+    private void implementCatalogue(LibrarySystem librarySystem) {
         JPanel rightPanel = (JPanel) getContentPane().getComponent(2);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -106,14 +106,29 @@ public class ReaderWindow extends JFrame {
         scrollPane.setSize(new Dimension(920, 600));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+
+        //Scroll Panel - Layout
+
+        JPanel borderlaoutpanel = new JPanel();
+        scrollPane.setViewportView(borderlaoutpanel);
+        borderlaoutpanel.setLayout(new BorderLayout(0, 0));
+
+        JPanel columnpanel = new JPanel();
+        borderlaoutpanel.add(columnpanel, BorderLayout.NORTH);
+        columnpanel.setLayout(new GridLayout(0, 1, 0, 1));
+        columnpanel.setBackground(Color.gray);
+
+
         // upperPanel with search option
         JLabel labelTextCatalogue = new JLabel();
         labelTextCatalogue.setSize(new Dimension(910, 50));
-        labelTextCatalogue.setText("<HTML>Explore our library catalog to discover our extensive collection of books.<br>  Select a category to browse and find the literary treasures housed in our library.</HTML>");
+        labelTextCatalogue.setText("<HTML>Explore our library catalog to discover our extensive collection of books.<br> " +
+                "Select a category to browse and find the literary treasures housed in our library.</HTML>");
         Font font = new Font("Serif", Font.BOLD, 15);
         labelTextCatalogue.setFont(font);
         labelTextCatalogue.setBounds(5, 4, 910, 60);
         upperPanel.add(labelTextCatalogue);
+
 
         // search by title
         JLabel titleSearchLabel = new JLabel("Search by title: ");
@@ -130,7 +145,65 @@ public class ReaderWindow extends JFrame {
         upperPanel.add(titleSearchLabel);
         upperPanel.add(titleSearchField);
         upperPanel.add(titleSearchButton);
+
+
+//        ActionListener readDescriptionButton = new ActionListener() {
+//            private Book book;
+//
+//            public void ActionListener(Book book) {
+//                this.book = book;
+//            }
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                JFrame descriptionFrame = new JFrame("Description");
+//                setSize(new Dimension(500, 500));
+//                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                JPanel descriptionPanel = new JPanel();
+//                descriptionPanel.setSize(500, 500);
+//
+//                descriptionFrame.setLocationRelativeTo(null);
+//                descriptionFrame.setResizable(false);
+//                descriptionFrame.add(descriptionPanel);
+//                descriptionFrame.setVisible(true);
+//            }
+//        };
+
+        titleSearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String titleText = titleSearchField.getText();
+                titleSearchField.setText("");
+                columnpanel.removeAll();
+
+                int i = 0;
+
+                for (Book book : librarySystem.getCatalogue().searchByTitle(titleText)) {
+                    JPanel rowPanel = new JPanel();
+                    rowPanel.setPreferredSize(new Dimension(1000,100));
+                    columnpanel.add(rowPanel);
+                    rowPanel.setLayout(null);
+
+                    JLabel bookLabel = new JLabel(book.toStringCatalogue());
+                    bookLabel.setFont(font);
+                    bookLabel.setBounds(5, 5, 1000, 50);
+                    rowPanel.add(bookLabel);
+
+                    JButton readDesriptionButton = new JButton("Read Description");
+                    readDesriptionButton.setBounds(5, 60, 130, 30);
+                    readDesriptionButton.setFont(font);
+                    readDesriptionButton.setBackground(new Color(161, 148, 137));
+//                    readDesriptionButton.addActionListener();
+//                    readDesriptionButton.addActionListener(readDescriptionButton(book));
+
+                    i ++;
+                    if(i%2==0)
+                        rowPanel.setBackground(SystemColor.inactiveCaptionBorder);
+                }
+            }
+        });
         // end search by title
+
 
         // search by author
         JLabel authorSearchLabel = new JLabel("Search by author: ");
@@ -142,12 +215,41 @@ public class ReaderWindow extends JFrame {
         authorSearchButton.setBounds(375, 100, 80, 25 );
 
         authorSearchLabel.setFont(font);
-        authorSearchField.setFont(font);
+        authorSearchButton.setFont(font);
 
         upperPanel.add(authorSearchLabel);
         upperPanel.add(authorSearchField);
         upperPanel.add(authorSearchButton);
+
+        authorSearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String authorText = authorSearchField.getText();
+                authorSearchField.setText("");
+
+                columnpanel.removeAll();
+
+                int i = 0;
+
+                for (Book book : librarySystem.getCatalogue().searchByAuthor(authorText)) {
+                    JPanel rowPanel = new JPanel();
+                    rowPanel.setPreferredSize(new Dimension(1000,100));
+                    columnpanel.add(rowPanel);
+                    rowPanel.setLayout(null);
+
+                    JLabel bookLabel = new JLabel(book.toStringCatalogue());
+                    bookLabel.setFont(font);
+                    bookLabel.setBounds(5, 5, 1000, 50);
+                    rowPanel.add(bookLabel);
+
+                    i ++;
+                    if(i%2==0)
+                        rowPanel.setBackground(SystemColor.inactiveCaptionBorder);
+                }
+            }
+        });
         // end search by author
+
 
         // search by genre
         Genre[] options = new Genre[Genre.values().length + 1];
@@ -163,11 +265,40 @@ public class ReaderWindow extends JFrame {
         genreSearchButton.setBounds(375, 130, 80, 25 );
 
         genreSearchLabel.setFont(font);
-        authorSearchField.setFont(font);
+        genreSearchButton.setFont(font);
 
         upperPanel.add(genreSearchLabel);
         upperPanel.add(genreJComboBox);
         upperPanel.add(genreSearchButton);
+
+        genreSearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                columnpanel.removeAll();
+
+                Genre selectedGenre = (Genre) genreJComboBox.getSelectedItem();
+                genreJComboBox.setSelectedIndex(0);
+
+                int i = 0;
+
+                for (Book book : librarySystem.getCatalogue().searchByGenre(selectedGenre)) {
+                    JPanel rowPanel = new JPanel();
+                    rowPanel.setPreferredSize(new Dimension(1000,100));
+                    columnpanel.add(rowPanel);
+                    rowPanel.setLayout(null);
+
+                    JLabel bookLabel = new JLabel(book.toStringCatalogue());
+                    bookLabel.setFont(font);
+                    bookLabel.setBounds(5, 5, 1000, 50);
+                    rowPanel.add(bookLabel);
+
+                    i ++;
+                    if(i%2==0)
+                        rowPanel.setBackground(SystemColor.inactiveCaptionBorder);
+
+                }
+            }
+        });
         // end search by genre
 
 
