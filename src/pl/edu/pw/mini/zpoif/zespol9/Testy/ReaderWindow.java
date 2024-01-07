@@ -10,21 +10,19 @@ import java.io.File;
 import java.io.IOException;
 
 
+
 public class ReaderWindow extends JFrame {
 
     public ReaderWindow(){
-        //cale okno
+
         setTitle("Reader Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(1000, 800));
-        getContentPane().setBackground(new Color(0, 0, 0));
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //JPanel rightpanel = new JPanel();
-        //rightpanel.setLayout(new BorderLayout());
+
 
         //dodajemy panel górny z obrazkiem:
         JPanel imagePanel = new JPanel();
-        imagePanel.setPreferredSize(new Dimension(getWidth(), 100));
+        imagePanel.setPreferredSize(new Dimension(1000, 100));
         try {
             BufferedImage image = ImageIO.read(new File("resources/WelcomeBack.png"));
             Graphics2D g2d = image.createGraphics();
@@ -36,33 +34,24 @@ public class ReaderWindow extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        add(imagePanel, BorderLayout.NORTH);
-
-        //dodajemy prawy (glowny panel):
-        JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.setBackground(new Color(108, 169, 223));
-        rightPanel.setPreferredSize(new Dimension(getWidth() - 190, getHeight() - 100));
-        add(rightPanel, BorderLayout.EAST);
 
         // dodajemy lewy panel z zakładkami:
         JPanel leftPanel = new JPanel(new FlowLayout());
-        leftPanel.setBackground(new Color(108, 169, 223));
-        leftPanel.setPreferredSize(new Dimension(170, getHeight() - 100));
+        leftPanel.setBackground(new Color(188, 122, 47));
+        leftPanel.setPreferredSize(new Dimension(180, 0));
 
 
         JButton jButton1 = new JButton("Catalogue");
         JButton jButton2 = new JButton("My Account");
-        jButton2.setPreferredSize(new Dimension(160, 50));
-        jButton1.setPreferredSize(new Dimension(160, 50));
-        jButton1.setBackground(new Color(108, 169, 223));
-        jButton2.setBackground(new Color(108, 169, 223));
 
+        JPanel rightPanel = new JPanel();
 
         jButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rightPanel.removeAll();
-                implementCatalogue(rightPanel);
+                implementCatalogue(leftPanel);
+
+                // implement
 
             }
         });
@@ -72,59 +61,102 @@ public class ReaderWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 rightPanel.removeAll();
-                implementAccount(rightPanel);
+                implementAccount();
 
             }
         });
 
+
+
+        jButton2.setPreferredSize(new Dimension(160, 50));
+        jButton1.setPreferredSize(new Dimension(160, 50));
+        jButton1.setBackground(new Color(188, 122, 47));
+        jButton2.setBackground(new Color(188, 122, 47));
+
         leftPanel.add(jButton1);
         leftPanel.add(jButton2);
+        rightPanel.setLayout(new BorderLayout());
 
-        //zakladki:
-        //JTabbedPane jTabbedPane = new JTabbedPane();
-        //jTabbedPane.addTab("Zakładka 2", createPanel(""));
-        //jTabbedPane.addTab("Zakładka 1", createPanel(""));
-
-        //jTabbedPane.addChangeListener(el -> {
-          //  int index = jTabbedPane.getSelectedIndex();
-            //updateRightPanel(rightPanel, index);
-
-        //});
-
-        //leftPanel.add(jTabbedPane);
-
-
+        setLayout(new BorderLayout());
+        add(imagePanel, BorderLayout.NORTH);
         add(leftPanel, BorderLayout.WEST);
+        add(rightPanel, BorderLayout.CENTER);
 
-
-        //JTabbedPane tabbedPane = new JTabbedPane();
-        //tabbedPane.add("Zakładka 1", createPanel("Zawartość zakłądki 1"));
-        //tabbedPane.add("Zakładka 2", createPanel("Zawartość zakłądki 2"));
-
-        //tabbedPane.add("Zakładka1", createPanel("s"));
-
-        //leftPanel.add(tabbedPane);
         setVisible(true);
-
     }
 
-    private void implementCatalogue(JPanel jPanel){
+    private void implementCatalogue(JPanel jPanel) {
         jPanel.setBackground(Color.yellow);
     }
 
-    private void implementAccount(JPanel jPanel){
-        jPanel.setBackground(Color.white);
+    private void implementAccount() {
+        JPanel rightPanel = (JPanel) getContentPane().getComponent(2);
 
-    }
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        JPanel upperPanel = new JPanel();
+        JPanel lowerPanel = new JPanel();
 
-    private JPanel createPanel(String s){
-        JPanel jPanel = new JPanel();
-        jPanel.add(new JLabel(s));
-        return jPanel;
+        upperPanel.setBackground(new Color(232, 169, 61));
+        upperPanel.setSize(new Dimension(920, 500));
+        lowerPanel.setLayout(new GridLayout(1, 3));
+        lowerPanel.setBackground(Color.CYAN);
+
+        JPanel reservedBooksPanel = new JPanel();
+        reservedBooksPanel.setBackground(new Color(255, 210, 131));
+        lowerPanel.add(reservedBooksPanel);
+        JPanel checkedOutBooksPanel = new JPanel();
+        checkedOutBooksPanel.setBackground(new Color(255, 210, 131));
+        lowerPanel.add(checkedOutBooksPanel);
+        JPanel toReadBooksPanel = new JPanel();
+        toReadBooksPanel.setBackground(new Color(255, 210, 131));
+        lowerPanel.add(toReadBooksPanel);
+
+        Font font = new Font("MV Boli", Font.BOLD, 20);
+
+        // panel na gorze:
+        upperPanel.setLayout(new GridLayout(4, 2));
+        JLabel nameLabel = new JLabel("Name:");
+        nameLabel.setFont(font);
+        upperPanel.add(nameLabel);
+        upperPanel.add(new JLabel());
+
+        JLabel surnameLabel = new JLabel("Surname:");
+        surnameLabel.setFont(font);
+        upperPanel.add(surnameLabel);
+        upperPanel.add(new JLabel());
+
+        JLabel loginLabel = new JLabel("Login:");
+        loginLabel.setFont(font);
+        upperPanel.add(loginLabel);
+        upperPanel.add(new JLabel());
+
+        JLabel fineLabel = new JLabel("Fine:");
+        fineLabel.setFont(font);
+        upperPanel.add(fineLabel);
+        upperPanel.add(new JLabel());
+
+        // reserved books:
+
+
+        //
+
+        splitPane.setTopComponent(upperPanel);
+        splitPane.setBottomComponent(lowerPanel);
+
+        splitPane.getTopComponent().setMinimumSize(new Dimension(0, 200));
+        splitPane.getTopComponent().setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
+
+        splitPane.setResizeWeight(0.0);
+        splitPane.setOneTouchExpandable(false);
+        splitPane.setDividerSize(0);
+
+        rightPanel.add(splitPane, BorderLayout.CENTER);
+        rightPanel.revalidate();
+        rightPanel.repaint();
+
     }
 
     public static void main(String[] args) {
-        ReaderWindow r = new ReaderWindow();
+        ReaderWindow readerWindow = new ReaderWindow();
     }
-
 }
