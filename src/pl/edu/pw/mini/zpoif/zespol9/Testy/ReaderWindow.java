@@ -5,6 +5,7 @@ import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 import pl.edu.pw.mini.zpoif.zespol9.Book.BookFormat;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
 
+import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
@@ -326,23 +327,82 @@ public class ReaderWindow extends JFrame {
     private void addCatalogueButton(JPanel rowPanel, Book book) {
         Font font = new Font("Serif", Font.BOLD, 15);
 
+        // description button
         JButton readDesriptionButton = new JButton("Read Description");
         readDesriptionButton.setBounds(5, 60, 150, 30);
         readDesriptionButton.setFont(font);
         readDesriptionButton.setBackground(new Color(161, 148, 137));
         readDesriptionButton.addActionListener(new ReadDescriptionListener(book));
         rowPanel.add(readDesriptionButton);
+        //end descriptionbutton
 
-        if(book.bookFormat == BookFormat.Ebook){
-            JButton Button = new JButton("Read Description");
-            readDesriptionButton.setBounds(5, 60, 150, 30);
-            readDesriptionButton.setFont(font);
-            readDesriptionButton.setBackground(new Color(161, 148, 137));
-            readDesriptionButton.addActionListener(new ReadDescriptionListener(book));
-            rowPanel.add(readDesriptionButton);
+        //add to read button
+        JButton addToReadButton = new JButton("Add to read");
+        addToReadButton.setBounds(170, 60, 150, 30);
+        addToReadButton.setFont(font);
+        addToReadButton.setBackground(new Color(204, 131, 141));
+        addToReadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myReader.addToReadBook(book);
+            }
+        });
+        rowPanel.add(addToReadButton);
+        //end add to read
+
+
+        if(book.bookFormat == BookFormat.Ebook) {
+            JButton downloadButton = new JButton("Download");
+            downloadButton.setBounds(335, 60, 150, 30);
+            downloadButton.setFont(font);
+            downloadButton.setBackground(new Color(157, 154, 151));
+
+            downloadButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JOptionPane.showMessageDialog(rowPanel, "Thank you from downloading our book ;)", "Downloading", JOptionPane.PLAIN_MESSAGE);
+                }
+            });
+            rowPanel.add(downloadButton);
+
+        } else {
+            JButton reserveButton = new JButton("Reserve");
+            reserveButton.setBounds(335, 60, 150, 30);
+            if (book.status == Status.Available){
+                reserveButton.setBackground(new Color(130, 164, 114));
+                reserveButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        myReader.reserveBook(book);
+                        reserveButton.setBackground(new Color(215, 99, 83));
+                        rowPanel.removeAll();
+                        rowPanel.setLayout(null);
+
+                        JLabel label = new JLabel("This book has been successfully reserved for you. Happy reading!");
+                        label.setFont(font);
+                        label.setBounds(15,20, 500, 40);
+                        label.setVisible(true);
+                        rowPanel.add(label);
+
+                        rowPanel.revalidate();
+                        rowPanel.repaint();
+
+                    }
+                });
+            } else {
+                reserveButton.setBackground(new Color(215, 99, 83));
+                reserveButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        JOptionPane.showMessageDialog(rowPanel, "<html><div style='text-align: center;'>The book " +
+                                "is not available for reservation at the moment. It is either reserved or on loan.<br>Please " +
+                                "choose another book or check back later.<br>Thank you for your understanding.</html>",
+                                "Currently unavailable for reservation", JOptionPane.PLAIN_MESSAGE);
+                    }
+                });
+            }
+            rowPanel.add(reserveButton);
         }
-
-
     }
 
     private void implementAccount() {
@@ -353,7 +413,7 @@ public class ReaderWindow extends JFrame {
         JPanel lowerPanel = new JPanel();
 
         upperPanel.setBackground(new Color(206, 190, 170, 255));
-        upperPanel.setSize(new Dimension(920, 200));
+        upperPanel.setSize(new Dimension(620, 200));
         lowerPanel.setLayout(new GridLayout(3, 1));
 
         JPanel reservedBooksPanel = new JPanel();
@@ -367,7 +427,7 @@ public class ReaderWindow extends JFrame {
         lowerPanel.add(toReadBooksPanel);
 
         Font font = new Font("MV Boli", Font.BOLD, 18);
-        Font font1 = new Font("Ariel", Font.BOLD, 16);
+        Font font1 = new Font("Serif", Font.BOLD, 16);
 
         // panel na gorze:
         upperPanel.setLayout(new GridLayout(4, 2));

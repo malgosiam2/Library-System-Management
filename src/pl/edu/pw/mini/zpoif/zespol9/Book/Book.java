@@ -97,4 +97,8 @@ public class Book {
     public String getDescription() {
         return description;
     }
+
+    public Status getStatus() {
+        return status;
+    }
 }
