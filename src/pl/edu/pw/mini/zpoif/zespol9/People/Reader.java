@@ -21,10 +21,13 @@ public class Reader extends Person {
         this.catalogueAccess = catalogueAccess;
     }
 
-
     public void reserveBook(Book book) {
         book.status = Status.Reserved;
         reservedBooks.add(book);
+    }
+
+    public void addToReadBook(Book book) {
+        toReadBooks.add(book);
     }
 
     public List<Book> getReservedBooks() {
