@@ -380,7 +380,7 @@ public class ReaderWindow extends JFrame {
 
                         JLabel label = new JLabel("This book has been successfully reserved for you. Happy reading!");
                         label.setFont(font);
-                        label.setBounds(15,20, 500, 40);
+                        label.setBounds(15,25, 500, 40);
                         label.setVisible(true);
                         rowPanel.add(label);
 
