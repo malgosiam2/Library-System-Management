@@ -2,6 +2,7 @@ package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 
+import pl.edu.pw.mini.zpoif.zespol9.Book.BookFormat;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
 
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
@@ -20,10 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 
 
 public class ReaderWindow extends JFrame {
@@ -175,28 +174,6 @@ public class ReaderWindow extends JFrame {
         upperPanel.add(titleSearchButton);
 
 
-//        ActionListener readDescriptionButton = new ActionListener() {
-//            private Book book;
-//
-//            public void ActionListener(Book book) {
-//                this.book = book;
-//            }
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                JFrame descriptionFrame = new JFrame("Description");
-//                setSize(new Dimension(500, 500));
-//                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                JPanel descriptionPanel = new JPanel();
-//                descriptionPanel.setSize(500, 500);
-//
-//                descriptionFrame.setLocationRelativeTo(null);
-//                descriptionFrame.setResizable(false);
-//                descriptionFrame.add(descriptionPanel);
-//                descriptionFrame.setVisible(true);
-//            }
-//        };
-
         titleSearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -205,29 +182,24 @@ public class ReaderWindow extends JFrame {
                 columnpanel.removeAll();
 
                 int i = 0;
-
                 for (Book book : librarySystem.getCatalogue().searchByTitle(titleText)) {
                     JPanel rowPanel = new JPanel();
-                    rowPanel.setPreferredSize(new Dimension(1000,100));
+                    rowPanel.setPreferredSize(new Dimension(1100,100));
                     columnpanel.add(rowPanel);
                     rowPanel.setLayout(null);
 
                     JLabel bookLabel = new JLabel(book.toStringCatalogue());
                     bookLabel.setFont(font);
-                    bookLabel.setBounds(5, 5, 1000, 50);
+                    bookLabel.setBounds(5, 5, 1100, 50);
                     rowPanel.add(bookLabel);
 
-                    JButton readDesriptionButton = new JButton("Read Description");
-                    readDesriptionButton.setBounds(5, 60, 130, 30);
-                    readDesriptionButton.setFont(font);
-                    readDesriptionButton.setBackground(new Color(161, 148, 137));
-//                    readDesriptionButton.addActionListener();
-//                    readDesriptionButton.addActionListener(readDescriptionButton(book));
+                    addCatalogueButton(rowPanel, book);
 
                     i ++;
                     if(i%2==0)
                         rowPanel.setBackground(SystemColor.inactiveCaptionBorder);
                 }
+                columnpanel.revalidate();
             }
         });
         // end search by title
@@ -261,19 +233,22 @@ public class ReaderWindow extends JFrame {
 
                 for (Book book : librarySystem.getCatalogue().searchByAuthor(authorText)) {
                     JPanel rowPanel = new JPanel();
-                    rowPanel.setPreferredSize(new Dimension(1000,100));
+                    rowPanel.setPreferredSize(new Dimension(1100,100));
                     columnpanel.add(rowPanel);
                     rowPanel.setLayout(null);
 
                     JLabel bookLabel = new JLabel(book.toStringCatalogue());
                     bookLabel.setFont(font);
-                    bookLabel.setBounds(5, 5, 1000, 50);
+                    bookLabel.setBounds(5, 5, 1100, 50);
                     rowPanel.add(bookLabel);
+
+                    addCatalogueButton(rowPanel, book);
 
                     i ++;
                     if(i%2==0)
                         rowPanel.setBackground(SystemColor.inactiveCaptionBorder);
                 }
+                columnpanel.revalidate();
             }
         });
         // end search by author
@@ -311,20 +286,22 @@ public class ReaderWindow extends JFrame {
 
                 for (Book book : librarySystem.getCatalogue().searchByGenre(selectedGenre)) {
                     JPanel rowPanel = new JPanel();
-                    rowPanel.setPreferredSize(new Dimension(1000,100));
+                    rowPanel.setPreferredSize(new Dimension(1100,100));
                     columnpanel.add(rowPanel);
                     rowPanel.setLayout(null);
 
                     JLabel bookLabel = new JLabel(book.toStringCatalogue());
                     bookLabel.setFont(font);
-                    bookLabel.setBounds(5, 5, 1000, 50);
+                    bookLabel.setBounds(5, 5, 1100, 50);
                     rowPanel.add(bookLabel);
+
+                    addCatalogueButton(rowPanel, book);
 
                     i ++;
                     if(i%2==0)
                         rowPanel.setBackground(SystemColor.inactiveCaptionBorder);
-
                 }
+                columnpanel.revalidate();
             }
         });
         // end search by genre
@@ -344,6 +321,28 @@ public class ReaderWindow extends JFrame {
         rightPanel.add(splitPane, BorderLayout.CENTER);
         rightPanel.revalidate();
         rightPanel.repaint();
+    }
+
+    private void addCatalogueButton(JPanel rowPanel, Book book) {
+        Font font = new Font("Serif", Font.BOLD, 15);
+
+        JButton readDesriptionButton = new JButton("Read Description");
+        readDesriptionButton.setBounds(5, 60, 150, 30);
+        readDesriptionButton.setFont(font);
+        readDesriptionButton.setBackground(new Color(161, 148, 137));
+        readDesriptionButton.addActionListener(new ReadDescriptionListener(book));
+        rowPanel.add(readDesriptionButton);
+
+        if(book.bookFormat == BookFormat.Ebook){
+            JButton Button = new JButton("Read Description");
+            readDesriptionButton.setBounds(5, 60, 150, 30);
+            readDesriptionButton.setFont(font);
+            readDesriptionButton.setBackground(new Color(161, 148, 137));
+            readDesriptionButton.addActionListener(new ReadDescriptionListener(book));
+            rowPanel.add(readDesriptionButton);
+        }
+
+
     }
 
     private void implementAccount() {

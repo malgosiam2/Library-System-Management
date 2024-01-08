@@ -71,7 +71,7 @@ public class Book {
         if (bookFormat == BookFormat.Ebook) {
             status = Status.Available;
         } else if (pstwo < 0.2) {
-            status = Status.CheckOut;
+            status = Status.CheckedOut;
         } else if (pstwo < 0.4) {
             status = Status.Reserved;
         } else {
@@ -84,5 +84,17 @@ public class Book {
                 ",   genre: " + genre + ",<br>format: " + bookFormat +
                 ",   rating: " + bookRating +
                 ",   status: " + status + "</HTML>";
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
