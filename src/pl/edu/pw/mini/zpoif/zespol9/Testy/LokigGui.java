@@ -79,6 +79,7 @@ public class LokigGui extends JFrame {
                             }
                             break;
                         }
+                        else JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                     }
 
                 } else if (loginUsedForSigning.startsWith("l")) {
@@ -96,6 +97,7 @@ public class LokigGui extends JFrame {
                             }
                             break;
                         }
+                        else JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                     }
 
                 } else {
