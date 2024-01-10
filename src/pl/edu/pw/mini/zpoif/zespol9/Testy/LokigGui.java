@@ -40,8 +40,10 @@ public class LokigGui extends JFrame {
 
         JLabel loginLabel = new JLabel("Login:");
         loginLabel.setFont(font);
-        loginField = new JTextField("");
-        passwordField = new JPasswordField("");
+        //loginField = new JTextField("");
+        //passwordField = new JPasswordField("");
+        loginField = new JTextField("lBilboBaggins10");
+        passwordField = new JPasswordField("wEcdS");
         panel.add(loginLabel);
         panel.add(loginField);
 
@@ -114,7 +116,7 @@ public class LokigGui extends JFrame {
     private void addNewWindow(String user, Person person) {
         JFrame window;
         if (user.equalsIgnoreCase("librarian")) {
-            window = new JFrame("Librarian window");
+            window = new LibrarianWindow(librarySystem, (Librarian) person);
         } else {
             window = new ReaderWindow(librarySystem, (Reader) person);
         }
