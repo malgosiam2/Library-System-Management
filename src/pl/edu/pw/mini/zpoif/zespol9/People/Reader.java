@@ -26,6 +26,10 @@ public class Reader extends Person {
         reservedBooks.add(book);
     }
 
+    public void deleteReservedBook(Book book){
+        reservedBooks.remove(book);
+    }
+
     public void addToReadBook(Book book) {
         if (!toReadBooks.contains(book)){
             toReadBooks.add(book);
