@@ -30,6 +30,7 @@ import java.util.Map;
 public class ReaderWindow extends JFrame {
 
     private Reader myReader;
+    private List<Book> bookList;
 
     public ReaderWindow(LibrarySystem librarySystem, Reader reader){
         this.myReader = reader;
@@ -155,9 +156,10 @@ public class ReaderWindow extends JFrame {
         upperPanel.add(labelTextCatalogue);
 
         // sorting button
-        JLabel labelTextSorting = new JLabel("Choose your catalog sorting preference:");
+        JLabel labelTextSorting = new JLabel("<html>Choose your catalog sorting preference:<br>" +
+                "(if you want to change type of sorting remember to click 'Search' or 'Display' again)</html>");
         labelTextSorting.setFont(font);
-        labelTextSorting.setBounds(540, 68, 250, 25);
+        labelTextSorting.setBounds(540, 5, 250, 95);
         upperPanel.add(labelTextSorting);
 
         JRadioButton authorSortButton = new JRadioButton("Sort by Author");
@@ -187,6 +189,12 @@ public class ReaderWindow extends JFrame {
         upperPanel.add(titleSortButton);
         upperPanel.add(ratingSortButton);
 
+//        JButton sortButton = new JButton("Sort");
+//        sortButton.setFont(font);
+//        sortButton.setBounds(540, 20, 80, 25);
+//        upperPanel.add(sortButton);
+
+
         //display all catalogue
         JLabel displayAllSearchLabel = new JLabel("Review the full catalogue by clicking 'Display' button: ");
         JButton displayAllSearchButton = new JButton("Display");
@@ -204,18 +212,18 @@ public class ReaderWindow extends JFrame {
         displayAllSearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Book> booksList = librarySystem.getCatalogue().getCatalogue();
+                bookList = librarySystem.getCatalogue().getCatalogue();
 
-                if(authorSortButton.isSelected()){
-                    booksList.sort(Comparator.comparing(book -> book.author.toLowerCase()));
+                if (authorSortButton.isSelected()){
+                    bookList.sort(Comparator.comparing(book -> book.author.toLowerCase()));
                 } else if (titleSortButton.isSelected()) {
-                    booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
+                    bookList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
                 } else if (ratingSortButton.isSelected()) {
-                    booksList.sort(Comparator.comparingDouble(book -> book.bookRating));
+                    bookList.sort((book1, book2) -> Double.compare(book2.bookRating, book1.bookRating));
                 }
 
                 columnpanel.removeAll();
-                printCatalogue(columnpanel, booksList);
+                printCatalogue(columnpanel, bookList);
 
             }
         });
@@ -245,6 +253,14 @@ public class ReaderWindow extends JFrame {
                 String titleText = titleSearchField.getText();
                 titleSearchField.setText("");
                 List<Book> booksList =librarySystem.getCatalogue().searchByTitle(titleText);
+
+                if (authorSortButton.isSelected()){
+                    bookList.sort(Comparator.comparing(book -> book.author.toLowerCase()));
+                } else if (titleSortButton.isSelected()) {
+                    bookList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
+                } else if (ratingSortButton.isSelected()) {
+                    bookList.sort((book1, book2) -> Double.compare(book2.bookRating, book1.bookRating));
+                }
 
                 columnpanel.removeAll();
                 printCatalogue(columnpanel, booksList);
@@ -276,6 +292,14 @@ public class ReaderWindow extends JFrame {
                 String authorText = authorSearchField.getText();
                 authorSearchField.setText("");
                 List<Book> booksList = librarySystem.getCatalogue().searchByAuthor(authorText);
+
+                if (authorSortButton.isSelected()){
+                    bookList.sort(Comparator.comparing(book -> book.author.toLowerCase()));
+                } else if (titleSortButton.isSelected()) {
+                    bookList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
+                } else if (ratingSortButton.isSelected()) {
+                    bookList.sort((book1, book2) -> Double.compare(book2.bookRating, book1.bookRating));
+                }
 
                 columnpanel.removeAll();
                 printCatalogue(columnpanel, booksList);
@@ -313,6 +337,14 @@ public class ReaderWindow extends JFrame {
                 Genre selectedGenre = (Genre) genreJComboBox.getSelectedItem();
                 genreJComboBox.setSelectedIndex(0);
                 List<Book> booksList = librarySystem.getCatalogue().searchByGenre(selectedGenre);
+
+                if (authorSortButton.isSelected()){
+                    bookList.sort(Comparator.comparing(book -> book.author.toLowerCase()));
+                } else if (titleSortButton.isSelected()) {
+                    bookList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
+                } else if (ratingSortButton.isSelected()) {
+                    bookList.sort((book1, book2) -> Double.compare(book2.bookRating, book1.bookRating));
+                }
 
                 printCatalogue(columnpanel, booksList);
             }
