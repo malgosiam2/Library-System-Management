@@ -78,27 +78,24 @@ public class LokigGui extends JFrame {
                                 JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                             }
                             break;
-                        }
-                        else JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
+                        } else JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                     }
 
                 } else if (loginUsedForSigning.startsWith("l")) {
-                    List<Librarian> tmpList = Librarian.getLibrarianList();
 
-                    for (Librarian el : tmpList) {
-                        if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
-                            if (el.getSignInData().isPasswordCorrect(passwordUsedForSigning)) {
-                                addNewWindow("librarian", el);
-                                dispose();
+                    Librarian librarian = librarySystem.getLibrarian();
 
-                            } else {
-                                //odmowa dostepu
-                                JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
-                            }
-                            break;
+                    if (librarian.getSignInData().getLogin().equals(loginUsedForSigning)) {
+                        if (librarian.getSignInData().isPasswordCorrect(passwordUsedForSigning)) {
+                            addNewWindow("librarian", librarian);
+                            dispose();
+
+                        } else {
+                            //odmowa dostepu
+                            JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                         }
-                        else JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
-                    }
+                    } else JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
+
 
                 } else {
                     JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");

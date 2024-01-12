@@ -13,7 +13,7 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
     private List<Reader> readerList = new ArrayList<>();
     private Librarian librarian = new Librarian("Bilbo", "Baggins");
 
-    public LibrarySystem(){
+    public LibrarySystem() {
         createReaders();
     }
 
@@ -32,8 +32,10 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
 
         Reader reader5 = new Reader("Jo", "March", this);
         readerList.add(reader5);
+    }
 
-
+    public Librarian getLibrarian() {
+        return librarian;
     }
 
     public List<Reader> getReaderList() {
