@@ -30,9 +30,12 @@ public class Reader extends Person {
         reservedBooks.remove(book);
     }
 
-    public void addToReadBook(Book book) {
+    public boolean addToReadBook(Book book) {
         if (!toReadBooks.contains(book)) {
             toReadBooks.add(book);
+            return true;
+        } else {
+            return false;
         }
     }
 

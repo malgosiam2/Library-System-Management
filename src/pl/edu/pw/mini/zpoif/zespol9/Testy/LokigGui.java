@@ -42,8 +42,8 @@ public class LokigGui extends JFrame {
         loginLabel.setFont(font);
         //loginField = new JTextField("");
         //passwordField = new JPasswordField("");
-        loginField = new JTextField("lBilboBaggins10");
-        passwordField = new JPasswordField("wEcdS");
+        loginField = new JTextField("rAnnaShirley13");
+        passwordField = new JPasswordField("HS9um");
         panel.add(loginLabel);
         panel.add(loginField);
 
