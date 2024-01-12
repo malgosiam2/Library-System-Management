@@ -19,6 +19,7 @@ public class Book {
     public Genre genre;
     public BookCondition bookCondition;
     public Status status;
+    public boolean postponed;
 
     public Book(String title, String author, String description, double bookRating, int bookRatingCount,
                 int bookReviewCount, int numberOfFollowers, Genre genre) {

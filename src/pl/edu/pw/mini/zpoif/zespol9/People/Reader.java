@@ -26,8 +26,18 @@ public class Reader extends Person {
         reservedBooks.add(book);
     }
 
+    public void deleteReservedBook(Book book) {
+        reservedBooks.remove(book);
+    }
+
     public void addToReadBook(Book book) {
-        toReadBooks.add(book);
+        if (!toReadBooks.contains(book)) {
+            toReadBooks.add(book);
+        }
+    }
+
+    public void deleteToReadBook(Book book) {
+        toReadBooks.remove(book);
     }
 
     public List<Book> getReservedBooks() {
@@ -36,6 +46,14 @@ public class Reader extends Person {
 
     public double getFine() {
         return fine;
+    }
+
+    public void addFine(double fine) {
+        this.fine += fine;
+    }
+
+    public void payFine(double payment) {
+        this.fine -= payment;
     }
 
     public Map<Book, LocalDate> getCheckedOutBooks() {
@@ -47,8 +65,10 @@ public class Reader extends Person {
     }
 
     public void postponeReturnDate(Book book) {
-        LocalDate returnDate = checkedOutBooks.get(book);
-        LocalDate newReturnDate = returnDate.plusDays(30);
-        checkedOutBooks.put(book, newReturnDate);
+        if (!book.postponed) {
+            LocalDate returnDate = checkedOutBooks.get(book);
+            LocalDate newReturnDate = returnDate.plusDays(30);
+            checkedOutBooks.put(book, newReturnDate);
+        }
     }
 }
