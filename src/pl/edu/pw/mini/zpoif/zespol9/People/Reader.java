@@ -56,8 +56,10 @@ public class Reader extends Person {
     }
 
     public void postponeReturnDate(Book book) {
-        LocalDate returnDate = checkedOutBooks.get(book);
-        LocalDate newReturnDate = returnDate.plusDays(30);
-        checkedOutBooks.put(book, newReturnDate);
+        if (!book.postponed){
+            LocalDate returnDate = checkedOutBooks.get(book);
+            LocalDate newReturnDate = returnDate.plusDays(30);
+            checkedOutBooks.put(book, newReturnDate);
+        }
     }
 }
