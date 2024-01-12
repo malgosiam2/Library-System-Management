@@ -47,6 +47,14 @@ public class Reader extends Person {
         return fine;
     }
 
+    public void addFine(double fine) {
+        this.fine += fine;
+    }
+
+    public void payFine(double payment){
+        this.fine -=payment;
+    }
+
     public Map<Book, LocalDate> getCheckedOutBooks() {
         return checkedOutBooks;
     }
