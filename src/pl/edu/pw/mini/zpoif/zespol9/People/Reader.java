@@ -29,6 +29,9 @@ public class Reader extends Person {
     public void addToReadBook(Book book) {
         toReadBooks.add(book);
     }
+    public void deleteToReadBook(Book book){
+        toReadBooks.remove(book);
+    }
 
     public List<Book> getReservedBooks() {
         return reservedBooks;
