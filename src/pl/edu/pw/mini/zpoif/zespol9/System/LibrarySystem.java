@@ -1,17 +1,19 @@
 package pl.edu.pw.mini.zpoif.zespol9.System;
 
+import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 import pl.edu.pw.mini.zpoif.zespol9.Catalogue.Catalogue;
 import pl.edu.pw.mini.zpoif.zespol9.People.Librarian;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class LibrarySystem implements SystemAccess, CatalogueAccess {
 
     private Catalogue catalogue = new Catalogue();
     private List<Reader> readerList = new ArrayList<>();
-    private Librarian librarian = new Librarian("Bilbo", "Baggins");
+    private Librarian librarian = new Librarian("Bilbo", "Baggins", this);
 
     public LibrarySystem() {
         createReaders();
@@ -48,12 +50,23 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
     }
 
     @Override
-    public void setCatalogue(Catalogue catalogue) {
-
+    public Reader getReader(String login) {
+        List<Reader> listReadersWithLogin = new LinkedList<>();
+        readerList.forEach(r -> {
+            if (r.getSignInData().getLogin() == login) {
+                listReadersWithLogin.add(r);
+            }
+        });
+        return listReadersWithLogin.get(0);
     }
 
     @Override
-    public Reader getReader(String login) {
-        return null;
+    public void addReader(Reader reader) {
+        readerList.add(reader);
+    }
+
+    @Override
+    public CatalogueAccess getCatalogueAccess() {
+        return this;
     }
 }

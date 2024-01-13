@@ -31,7 +31,7 @@ public class ReaderWindow extends JFrame {
 
     private Reader myReader;
 
-    public ReaderWindow(LibrarySystem librarySystem, Reader reader){
+    public ReaderWindow(LibrarySystem librarySystem, Reader reader) {
         this.myReader = reader;
 
         setTitle("Reader Window");
@@ -130,7 +130,7 @@ public class ReaderWindow extends JFrame {
         setVisible(true);
     }
 
-    private void implementCatalogue(LibrarySystem librarySystem){
+    private void implementCatalogue(LibrarySystem librarySystem) {
         List<Book> booksList = librarySystem.getCatalogue().getCatalogue();
 
         JPanel rightPanel = (JPanel) getContentPane().getComponent(2);
@@ -235,7 +235,7 @@ public class ReaderWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 columnpanel.removeAll();
 
-                if (authorSortButton.isSelected()){
+                if (authorSortButton.isSelected()) {
                     booksList.sort(Comparator.comparing(book -> book.author.toLowerCase()));
                 } else if (titleSortButton.isSelected()) {
                     booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
@@ -310,7 +310,7 @@ public class ReaderWindow extends JFrame {
 
         titleSearchLabel.setBounds(5, 70, 120, 25);
         titleSearchField.setBounds(135, 70, 230, 25);
-        titleSearchButton.setBounds(375, 70, 80, 25 );
+        titleSearchButton.setBounds(375, 70, 80, 25);
 
         titleSearchLabel.setFont(font);
         titleSearchButton.setFont(font);
@@ -342,7 +342,7 @@ public class ReaderWindow extends JFrame {
 
         authorSearchLabel.setBounds(5, 100, 120, 25);
         authorSearchField.setBounds(135, 100, 230, 25);
-        authorSearchButton.setBounds(375, 100, 80, 25 );
+        authorSearchButton.setBounds(375, 100, 80, 25);
 
         authorSearchLabel.setFont(font);
         authorSearchButton.setFont(font);
@@ -378,7 +378,7 @@ public class ReaderWindow extends JFrame {
 
         genreSearchLabel.setBounds(5, 130, 120, 25);
         genreJComboBox.setBounds(135, 130, 230, 25);
-        genreSearchButton.setBounds(375, 130, 80, 25 );
+        genreSearchButton.setBounds(375, 130, 80, 25);
 
         genreSearchLabel.setFont(font);
         genreSearchButton.setFont(font);
@@ -419,14 +419,14 @@ public class ReaderWindow extends JFrame {
         rightPanel.repaint();
     }
 
-    private void printCatalogue(JPanel columnpanel, List<Book> booksList){
+    private void printCatalogue(JPanel columnpanel, List<Book> booksList) {
         Font font = new Font("Serif", Font.BOLD, 15);
 
         int i = 0;
 
         for (Book book : booksList) {
             JPanel rowPanel = new JPanel();
-            rowPanel.setPreferredSize(new Dimension(1100,100));
+            rowPanel.setPreferredSize(new Dimension(1100, 100));
             columnpanel.add(rowPanel);
             rowPanel.setLayout(null);
 
@@ -437,8 +437,8 @@ public class ReaderWindow extends JFrame {
 
             addCatalogueButton(rowPanel, book);
 
-            i ++;
-            if(i%2==0)
+            i++;
+            if (i % 2 == 0)
                 rowPanel.setBackground(SystemColor.inactiveCaptionBorder);
         }
         columnpanel.revalidate();
@@ -465,14 +465,14 @@ public class ReaderWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean wasItAdd = myReader.addToReadBook(book);
-                if (wasItAdd){
+                if (wasItAdd) {
                     rowPanel.removeAll();
                     rowPanel.setLayout(null);
 
                     JLabel label = new JLabel("<html>This book has been successfully added to your list.<br> " +
                             "We hope that you'll come back to read this book soon</html>");
                     label.setFont(font);
-                    label.setBounds(15,25, 500, 40);
+                    label.setBounds(15, 25, 500, 40);
                     label.setVisible(true);
                     rowPanel.add(label);
 
@@ -487,7 +487,7 @@ public class ReaderWindow extends JFrame {
         //end add to read
 
 
-        if(book.bookFormat == BookFormat.Ebook) {
+        if (book.bookFormat == BookFormat.Ebook) {
             JButton downloadButton = new JButton("Download");
             downloadButton.setBounds(335, 60, 150, 30);
             downloadButton.setFont(font);
@@ -504,7 +504,7 @@ public class ReaderWindow extends JFrame {
         } else {
             JButton reserveButton = new JButton("Reserve");
             reserveButton.setBounds(335, 60, 150, 30);
-            if (book.status == Status.Available){
+            if (book.status == Status.Available) {
                 reserveButton.setBackground(new Color(130, 164, 114));
                 reserveButton.addActionListener(new ActionListener() {
                     @Override
@@ -515,7 +515,7 @@ public class ReaderWindow extends JFrame {
 
                         JLabel label = new JLabel("This book has been successfully reserved for you. Happy reading!");
                         label.setFont(font);
-                        label.setBounds(15,25, 500, 40);
+                        label.setBounds(15, 25, 500, 40);
                         label.setVisible(true);
                         rowPanel.add(label);
 
@@ -530,8 +530,8 @@ public class ReaderWindow extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         JOptionPane.showMessageDialog(rowPanel, "<html><div style='text-align: center;'>The book " +
-                                "is not available for reservation at the moment. It is either reserved or on loan.<br>Please " +
-                                "choose another book or check back later.<br>Thank you for your understanding.</html>",
+                                        "is not available for reservation at the moment. It is either reserved or on loan.<br>Please " +
+                                        "choose another book or check back later.<br>Thank you for your understanding.</html>",
                                 "Currently unavailable for reservation", JOptionPane.PLAIN_MESSAGE);
                     }
                 });
@@ -603,7 +603,7 @@ public class ReaderWindow extends JFrame {
         reservedBooksPanel.add(jReserved);
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (Book el: myReader.getReservedBooks()){
+        for (Book el : myReader.getReservedBooks()) {
             listModel.addElement("Title:    " + el.title);
             listModel.addElement("Author:   " + el.author);
             listModel.addElement(" ");
@@ -634,7 +634,7 @@ public class ReaderWindow extends JFrame {
 
 
         DefaultListModel<ClassWithComponentsToBePrinted> defaultListModel = new DefaultListModel<>();
-        for (int i = 0; i < mapaReader.size(); i ++){
+        for (int i = 0; i < mapaReader.size(); i++) {
             defaultListModel.addElement(listadoPrintowania.get(i));
         }
 
@@ -688,7 +688,7 @@ public class ReaderWindow extends JFrame {
         toReadBooksPanel.setLayout(new FlowLayout());
         List<Book> toReadList = this.myReader.getToReadBooks();
         DefaultListModel<String> listModel1 = new DefaultListModel<>();
-        for (Book el: toReadList){
+        for (Book el : toReadList) {
             listModel1.addElement("Title:    " + el.title);
             listModel1.addElement("Author:   " + el.author);
             listModel1.addElement(" ");
@@ -720,7 +720,7 @@ public class ReaderWindow extends JFrame {
 
     }
 
-    public class ClassWithComponentsToBePrinted{
+    public class ClassWithComponentsToBePrinted {
 
         public Book book;
 
@@ -729,7 +729,7 @@ public class ReaderWindow extends JFrame {
         public String data;
         public String pusty;
 
-        public ClassWithComponentsToBePrinted(Book book, LocalDate localDate){
+        public ClassWithComponentsToBePrinted(Book book, LocalDate localDate) {
             this.book = book;
             this.tytul = book.title;
             this.autor = book.author;
@@ -739,7 +739,7 @@ public class ReaderWindow extends JFrame {
 
     }
 
-    class  PrintInFourRows extends JPanel implements ListCellRenderer<ClassWithComponentsToBePrinted>{
+    class PrintInFourRows extends JPanel implements ListCellRenderer<ClassWithComponentsToBePrinted> {
         private JLabel titleLabel;
         private JLabel authorLabel;
         private JLabel dataLabel;

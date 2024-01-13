@@ -7,11 +7,8 @@ import java.util.Random;
 public class SignInData implements PasswordCheckInterfejs {
 
     private static Random random = new Random();
-
-
     private String name;
     private String surname;
-
     private String login;
     private String password;
     private final int id;
