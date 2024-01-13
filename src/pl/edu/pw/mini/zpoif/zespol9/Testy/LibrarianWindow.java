@@ -144,11 +144,11 @@ public class LibrarianWindow extends JFrame {
         // to do
     }
 
-    private void implementAddUser(){
+    private void implementAddBook(){
         // to do
     }
 
-    private void implementAddBook(){
+    private void implementAddUser(){
         // to do
     }
 
