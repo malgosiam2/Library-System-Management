@@ -87,6 +87,14 @@ public class Book {
                 ",   status: " + status + "</HTML>";
     }
 
+    public String toStringCatalogueForLibrarian() {
+        return "<HTML>Title: '" + title + "', author: " + author +
+                ", genre: " + genre + ", format: " + bookFormat +
+                ",<br>rating: " + bookRating + ", status: " + status +
+                ", rating count: " + bookRatingCount +
+                ", id: " + id + ", condition: " + bookCondition +  "</HTML>";
+    }
+
     public String getTitle() {
         return title;
     }

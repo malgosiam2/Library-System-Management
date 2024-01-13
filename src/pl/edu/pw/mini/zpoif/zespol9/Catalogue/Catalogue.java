@@ -51,6 +51,16 @@ public class Catalogue {
         return listByTitle;
     }
 
+    public static List<Book> searchById(int id) {
+        List<Book> listById = new LinkedList<>();
+        catalogue.forEach(book -> {
+            if (id == book.id) {
+                listById.add(book);
+            }
+        });
+        return listById;
+    }
+
     public static List<Book> getCatalogue() {
         return catalogue;
     }
