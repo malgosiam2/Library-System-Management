@@ -10,9 +10,10 @@ public class Librarian extends Person implements CheckOutDesk {
 
     private SystemAccess systemAccess;
 
-    public Librarian(String name, String surname) {
+    public Librarian(String name, String surname, SystemAccess systemAccess) {
         super(name, surname);
         this.signInData.setLogin("l" + this.signInData.getLogin());
+        this.systemAccess = systemAccess;
     }
 
     @Override

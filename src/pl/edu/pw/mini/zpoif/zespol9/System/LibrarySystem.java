@@ -11,7 +11,7 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
 
     private Catalogue catalogue = new Catalogue();
     private List<Reader> readerList = new ArrayList<>();
-    private Librarian librarian = new Librarian("Bilbo", "Baggins");
+    private Librarian librarian = new Librarian("Bilbo", "Baggins", this);
 
     public LibrarySystem() {
         createReaders();
