@@ -92,7 +92,7 @@ public class Book {
                 ", genre: " + genre + ", format: " + bookFormat +
                 ",<br>rating: " + bookRating + ", status: " + status +
                 ", rating count: " + bookRatingCount +
-                ", id: " + id + ", condition: " + bookCondition +  "</HTML>";
+                ", id: " + id + ", condition: " + bookCondition + "</HTML>";
     }
 
     public String getTitle() {

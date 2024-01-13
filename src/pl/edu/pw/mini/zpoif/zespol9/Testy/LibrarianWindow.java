@@ -138,7 +138,7 @@ public class LibrarianWindow extends JFrame {
 
     }
 
-    private void implementCatalogue(LibrarySystem librarySystem){
+    private void implementCatalogue(LibrarySystem librarySystem) {
         JPanel rightPanel = (JPanel) getContentPane().getComponent(2);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -178,7 +178,7 @@ public class LibrarianWindow extends JFrame {
 
         titleSearchLabel.setBounds(5, 50, 120, 25);
         titleSearchField.setBounds(135, 50, 230, 25);
-        titleSearchButton.setBounds(375, 50, 80, 25 );
+        titleSearchButton.setBounds(375, 50, 80, 25);
 
         titleSearchLabel.setFont(font);
         titleSearchButton.setFont(font);
@@ -210,7 +210,7 @@ public class LibrarianWindow extends JFrame {
 
         authorSearchLabel.setBounds(5, 80, 120, 25);
         authorSearchField.setBounds(135, 80, 230, 25);
-        authorSearchButton.setBounds(375, 80, 80, 25 );
+        authorSearchButton.setBounds(375, 80, 80, 25);
 
         authorSearchLabel.setFont(font);
         authorSearchButton.setFont(font);
@@ -241,7 +241,7 @@ public class LibrarianWindow extends JFrame {
 
         idSearchLabel.setBounds(5, 110, 120, 25);
         idSearchField.setBounds(135, 110, 230, 25);
-        idSearchButton.setBounds(375, 110, 80, 25 );
+        idSearchButton.setBounds(375, 110, 80, 25);
 
         idSearchLabel.setFont(font);
         idSearchField.setFont(font);
@@ -282,13 +282,13 @@ public class LibrarianWindow extends JFrame {
         rightPanel.repaint();
     }
 
-    private void printCatalogue(JPanel columnpanel, List<Book> booksList){
+    private void printCatalogue(JPanel columnpanel, List<Book> booksList) {
         Font font = new Font("Serif", Font.BOLD, 15);
 
         int i = 0;
         for (Book book : booksList) {
             JPanel rowPanel = new JPanel();
-            rowPanel.setPreferredSize(new Dimension(1100,100));
+            rowPanel.setPreferredSize(new Dimension(1100, 100));
             columnpanel.add(rowPanel);
             rowPanel.setLayout(null);
 
@@ -299,8 +299,8 @@ public class LibrarianWindow extends JFrame {
 
             addCatalogueButton(rowPanel, book);
 
-            i ++;
-            if(i%2==0)
+            i++;
+            if (i % 2 == 0)
                 rowPanel.setBackground(SystemColor.inactiveCaptionBorder);
         }
         columnpanel.revalidate();
@@ -334,15 +334,15 @@ public class LibrarianWindow extends JFrame {
 
     }
 
-    private void implementAddUser(){
+    private void implementAddUser() {
         // to do
     }
 
-    private void implementAddBook(){
+    private void implementAddBook() {
         // to do
     }
 
-    private void implementLibraryManagement(){
+    private void implementLibraryManagement() {
         // to do
     }
 
