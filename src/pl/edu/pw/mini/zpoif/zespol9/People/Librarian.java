@@ -8,7 +8,7 @@ import pl.edu.pw.mini.zpoif.zespol9.System.SystemAccess;
 
 public class Librarian extends Person implements CheckOutDesk {
 
-    private SystemAccess systemAccess;
+    private final SystemAccess systemAccess;
 
     public Librarian(String name, String surname, SystemAccess systemAccess) {
         super(name, surname);
@@ -18,7 +18,7 @@ public class Librarian extends Person implements CheckOutDesk {
 
     @Override
     public void addBook(Book book) {
-
+        systemAccess.getCatalogue().getCatalogue().add(book);
     }
 
     @Override
