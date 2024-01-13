@@ -2,6 +2,7 @@ package pl.edu.pw.mini.zpoif.zespol9.System;
 
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 import pl.edu.pw.mini.zpoif.zespol9.Catalogue.Catalogue;
+import pl.edu.pw.mini.zpoif.zespol9.Exceptions.NoReaderWithThatLoginException;
 import pl.edu.pw.mini.zpoif.zespol9.People.Librarian;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 
@@ -50,14 +51,18 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
     }
 
     @Override
-    public Reader getReader(String login) {
-        List<Reader> listReadersWithLogin = new LinkedList<>();
-        readerList.forEach(r -> {
+    public Reader getReader(String login) throws NoReaderWithThatLoginException {
+        Reader reader = null;
+        for (Reader r : readerList) {
             if (r.getSignInData().getLogin() == login) {
-                listReadersWithLogin.add(r);
+                reader = r;
             }
-        });
-        return listReadersWithLogin.get(0);
+        }
+        if (reader != null) {
+            return reader;
+        } else {
+            throw new NoReaderWithThatLoginException();
+        }
     }
 
     @Override

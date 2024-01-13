@@ -4,6 +4,7 @@ package pl.edu.pw.mini.zpoif.zespol9.People;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 import pl.edu.pw.mini.zpoif.zespol9.Book.BookCondition;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
+import pl.edu.pw.mini.zpoif.zespol9.Exceptions.NoReaderWithThatLoginException;
 import pl.edu.pw.mini.zpoif.zespol9.System.CatalogueAccess;
 import pl.edu.pw.mini.zpoif.zespol9.System.CheckOutDesk;
 import pl.edu.pw.mini.zpoif.zespol9.System.SystemAccess;
@@ -34,7 +35,7 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public boolean checkOutBook(String login, Book book) {
+    public boolean checkOutBook(String login, Book book) throws NoReaderWithThatLoginException {
         Reader reader = systemAccess.getReader(login);
         if (book.status == Status.Available) {
             book.status = Status.CheckedOut;
@@ -46,7 +47,7 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public boolean acceptBookReturn(String login, Book book, BookCondition bookCondition) {
+    public boolean acceptBookReturn(String login, Book book, BookCondition bookCondition) throws NoReaderWithThatLoginException {
         Reader reader = systemAccess.getReader(login);
         LocalDate returnDate = reader.getCheckedOutBooks().remove(book);
         if (returnDate == null) {
@@ -76,7 +77,7 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public boolean CheckOutBookFromReservedBooks(String login, Book book) {
+    public boolean CheckOutBookFromReservedBooks(String login, Book book) throws NoReaderWithThatLoginException {
         Reader reader = systemAccess.getReader(login);
         if (reader.getReservedBooks().contains(book)) {
             book.status = Status.Available;
