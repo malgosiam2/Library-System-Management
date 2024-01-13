@@ -50,11 +50,6 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
     }
 
     @Override
-    public void setCatalogue(Catalogue catalogue) {
-
-    }
-
-    @Override
     public Reader getReader(String login) {
         List<Reader> listReadersWithLogin = new LinkedList<>();
         readerList.forEach(r -> {
@@ -63,5 +58,10 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
             }
         });
         return listReadersWithLogin.get(0);
+    }
+
+    @Override
+    public void addReader(Reader reader) {
+        readerList.add(reader);
     }
 }
