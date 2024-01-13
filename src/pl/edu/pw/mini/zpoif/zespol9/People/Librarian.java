@@ -2,6 +2,7 @@ package pl.edu.pw.mini.zpoif.zespol9.People;
 
 
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
+import pl.edu.pw.mini.zpoif.zespol9.Book.BookCondition;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
 import pl.edu.pw.mini.zpoif.zespol9.System.CatalogueAccess;
 import pl.edu.pw.mini.zpoif.zespol9.System.CheckOutDesk;
@@ -40,13 +41,14 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public void acceptBookReturn(String login, Book book) {
+    public void acceptBookReturn(String login, Book book, BookCondition bookCondition) {
         Reader reader = systemAccess.getReader(login);
         LocalDate returnDate = reader.getCheckedOutBooks().remove(book);
         if (LocalDate.now().isAfter(returnDate)) {
             long holdoverdays = Math.abs(ChronoUnit.DAYS.between(returnDate, LocalDate.now()));
             imposeFine(reader, 0.2 * holdoverdays);
         }
+        book.bookCondition = bookCondition;
         book.status = Status.Available;
     }
 

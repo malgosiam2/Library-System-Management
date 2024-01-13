@@ -1,6 +1,7 @@
 package pl.edu.pw.mini.zpoif.zespol9.System;
 
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
+import pl.edu.pw.mini.zpoif.zespol9.Book.BookCondition;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 import pl.edu.pw.mini.zpoif.zespol9.People.SignInData;
 
@@ -12,7 +13,7 @@ public interface CheckOutDesk {
 
     void checkOutBook(String login, Book book);
 
-    void acceptBookReturn(String login, Book book);
+    void acceptBookReturn(String login, Book book, BookCondition bookCondition);
 
     SignInData addUser(String name, String surname);
 
