@@ -34,10 +34,15 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public void checkOutBook(String login, Book book) {
+    public boolean checkOutBook(String login, Book book) {
         Reader reader = systemAccess.getReader(login);
-        book.status = Status.CheckedOut;
-        reader.getCheckedOutBooks().put(book, LocalDate.now());
+        if (book.status == Status.Available){
+            book.status = Status.CheckedOut;
+            reader.getCheckedOutBooks().put(book, LocalDate.now());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -67,6 +72,7 @@ public class Librarian extends Person implements CheckOutDesk {
 
     @Override
     public void CheckOutBookFromReservedBooks(String login, Book book) {
+        book.status = Status.Available;
         checkOutBook(login, book);
         Reader reader = systemAccess.getReader(login);
         reader.getReservedBooks().remove(book);

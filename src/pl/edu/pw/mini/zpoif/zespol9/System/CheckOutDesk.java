@@ -11,7 +11,7 @@ public interface CheckOutDesk {
 
     void deleteBook(Book book);
 
-    void checkOutBook(String login, Book book);
+    boolean checkOutBook(String login, Book book);
 
     void acceptBookReturn(String login, Book book, BookCondition bookCondition);
 
