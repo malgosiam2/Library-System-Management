@@ -6,7 +6,9 @@ import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
 import pl.edu.pw.mini.zpoif.zespol9.System.CheckOutDesk;
 import pl.edu.pw.mini.zpoif.zespol9.System.SystemAccess;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 
 public class Librarian extends Person implements CheckOutDesk {
@@ -38,7 +40,13 @@ public class Librarian extends Person implements CheckOutDesk {
 
     @Override
     public void acceptBookReturn(String login, Book book) {
-
+        Reader reader = systemAccess.getReader(login);
+        LocalDate returnDate = reader.getCheckedOutBooks().remove(book);
+        if (LocalDate.now().isAfter(returnDate)){
+            long holdoverdays = Math.abs(ChronoUnit.DAYS.between(returnDate, LocalDate.now()));
+            imposeFine(reader, 0.2*holdoverdays);
+        }
+        book.status = Status.Available;
     }
 
     @Override
@@ -47,7 +55,7 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public void imposeFine(Reader reader) {
-
+    public void imposeFine(Reader reader, double fine) {
+        reader.addFine(fine);
     }
 }

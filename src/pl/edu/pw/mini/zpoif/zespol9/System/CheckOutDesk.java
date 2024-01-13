@@ -16,5 +16,5 @@ public interface CheckOutDesk {
 
     SignInData addUser(String name, String surname);
 
-    void imposeFine(Reader reader);
+    void imposeFine(Reader reader, double fine);
 }
