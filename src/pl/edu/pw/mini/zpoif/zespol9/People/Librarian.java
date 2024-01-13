@@ -36,7 +36,7 @@ public class Librarian extends Person implements CheckOutDesk {
     @Override
     public boolean checkOutBook(String login, Book book) {
         Reader reader = systemAccess.getReader(login);
-        if (book.status == Status.Available){
+        if (book.status == Status.Available) {
             book.status = Status.CheckedOut;
             reader.getCheckedOutBooks().put(book, LocalDate.now());
             return true;
@@ -46,15 +46,20 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public void acceptBookReturn(String login, Book book, BookCondition bookCondition) {
+    public boolean acceptBookReturn(String login, Book book, BookCondition bookCondition) {
         Reader reader = systemAccess.getReader(login);
         LocalDate returnDate = reader.getCheckedOutBooks().remove(book);
-        if (LocalDate.now().isAfter(returnDate)) {
-            long holdoverdays = Math.abs(ChronoUnit.DAYS.between(returnDate, LocalDate.now()));
-            imposeFine(reader, 0.2 * holdoverdays);
+        if (returnDate == null) {
+            return false;
+        } else {
+            if (LocalDate.now().isAfter(returnDate)) {
+                long holdoverdays = Math.abs(ChronoUnit.DAYS.between(returnDate, LocalDate.now()));
+                imposeFine(reader, 0.2 * holdoverdays);
+            }
+            book.bookCondition = bookCondition;
+            book.status = Status.Available;
+            return true;
         }
-        book.bookCondition = bookCondition;
-        book.status = Status.Available;
     }
 
     @Override

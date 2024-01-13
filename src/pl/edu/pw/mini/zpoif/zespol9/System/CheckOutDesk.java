@@ -13,7 +13,7 @@ public interface CheckOutDesk {
 
     boolean checkOutBook(String login, Book book);
 
-    void acceptBookReturn(String login, Book book, BookCondition bookCondition);
+    boolean acceptBookReturn(String login, Book book, BookCondition bookCondition);
 
     SignInData addUser(String name, String surname);
 
