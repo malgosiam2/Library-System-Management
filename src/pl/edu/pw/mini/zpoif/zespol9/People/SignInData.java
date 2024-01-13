@@ -65,6 +65,7 @@ public class SignInData implements PasswordCheckInterfejs, CreatedPasswordAccess
     @Override
     public String getNewPassword() throws AlreadySeenThePasswordException {
         if (unseen) {
+            unseen = false;
             return password;
         } else {
             throw new AlreadySeenThePasswordException();
