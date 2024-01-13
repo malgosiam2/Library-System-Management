@@ -1,9 +1,8 @@
 package pl.edu.pw.mini.zpoif.zespol9.People;
 
+
 import pl.edu.pw.mini.zpoif.zespol9.System.SystemAccess;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Librarian extends Person {
 
