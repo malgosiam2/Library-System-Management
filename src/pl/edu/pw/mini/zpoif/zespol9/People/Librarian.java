@@ -62,4 +62,11 @@ public class Librarian extends Person implements CheckOutDesk {
     public void imposeFine(Reader reader, double fine) {
         reader.addFine(fine);
     }
+
+    @Override
+    public void CheckOutBookFromReservedBooks(String login, Book book) {
+        checkOutBook(login, book);
+        Reader reader = systemAccess.getReader(login);
+        reader.getReservedBooks().remove(book);
+    }
 }
