@@ -2,6 +2,7 @@ package pl.edu.pw.mini.zpoif.zespol9.People;
 
 
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
+import pl.edu.pw.mini.zpoif.zespol9.Book.BookCondition;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
 import pl.edu.pw.mini.zpoif.zespol9.System.CatalogueAccess;
 import pl.edu.pw.mini.zpoif.zespol9.System.CheckOutDesk;
@@ -33,21 +34,32 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public void checkOutBook(String login, Book book) {
+    public boolean checkOutBook(String login, Book book) {
         Reader reader = systemAccess.getReader(login);
-        book.status = Status.CheckedOut;
-        reader.getCheckedOutBooks().put(book, LocalDate.now());
+        if (book.status == Status.Available) {
+            book.status = Status.CheckedOut;
+            reader.getCheckedOutBooks().put(book, LocalDate.now());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public void acceptBookReturn(String login, Book book) {
+    public boolean acceptBookReturn(String login, Book book, BookCondition bookCondition) {
         Reader reader = systemAccess.getReader(login);
         LocalDate returnDate = reader.getCheckedOutBooks().remove(book);
-        if (LocalDate.now().isAfter(returnDate)) {
-            long holdoverdays = Math.abs(ChronoUnit.DAYS.between(returnDate, LocalDate.now()));
-            imposeFine(reader, 0.2 * holdoverdays);
+        if (returnDate == null) {
+            return false;
+        } else {
+            if (LocalDate.now().isAfter(returnDate)) {
+                long holdoverdays = Math.abs(ChronoUnit.DAYS.between(returnDate, LocalDate.now()));
+                imposeFine(reader, 0.2 * holdoverdays);
+            }
+            book.bookCondition = bookCondition;
+            book.status = Status.Available;
+            return true;
         }
-        book.status = Status.Available;
     }
 
     @Override
@@ -61,5 +73,18 @@ public class Librarian extends Person implements CheckOutDesk {
     @Override
     public void imposeFine(Reader reader, double fine) {
         reader.addFine(fine);
+    }
+
+    @Override
+    public boolean CheckOutBookFromReservedBooks(String login, Book book) {
+        Reader reader = systemAccess.getReader(login);
+        if (reader.getReservedBooks().contains(book)) {
+            book.status = Status.Available;
+            checkOutBook(login, book);
+            reader.getReservedBooks().remove(book);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
