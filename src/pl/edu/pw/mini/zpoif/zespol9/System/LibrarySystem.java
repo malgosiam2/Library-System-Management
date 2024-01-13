@@ -64,4 +64,9 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
     public void addReader(Reader reader) {
         readerList.add(reader);
     }
+
+    @Override
+    public CatalogueAccess getCatalogueAccess() {
+        return this;
+    }
 }
