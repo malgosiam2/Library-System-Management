@@ -19,5 +19,6 @@ public interface CheckOutDesk {
     SignInData addUser(String name, String surname);
 
     void imposeFine(Reader reader, double fine);
+
     boolean CheckOutBookFromReservedBooks(String login, Book book) throws NoReaderWithThatLoginException;
 }
