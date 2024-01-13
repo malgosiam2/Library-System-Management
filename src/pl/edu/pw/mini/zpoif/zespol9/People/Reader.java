@@ -67,11 +67,15 @@ public class Reader extends Person {
         return toReadBooks;
     }
 
-    public void postponeReturnDate(Book book) {
+    public boolean postponeReturnDate(Book book) {
         if (!book.postponed) {
             LocalDate returnDate = checkedOutBooks.get(book);
             LocalDate newReturnDate = returnDate.plusDays(30);
             checkedOutBooks.put(book, newReturnDate);
+            book.postponed = true;
+            return true;
+        } else {
+            return false;
         }
     }
 }
