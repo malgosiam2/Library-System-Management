@@ -1,10 +1,12 @@
 package pl.edu.pw.mini.zpoif.zespol9.System;
 
+import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
 import pl.edu.pw.mini.zpoif.zespol9.Catalogue.Catalogue;
 import pl.edu.pw.mini.zpoif.zespol9.People.Librarian;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class LibrarySystem implements SystemAccess, CatalogueAccess {
@@ -54,6 +56,12 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
 
     @Override
     public Reader getReader(String login) {
-        return null;
+        List<Reader> listReadersWithLogin = new LinkedList<>();
+        readerList.forEach(r -> {
+            if (r.getSignInData().getLogin() == login) {
+                listReadersWithLogin.add(r);
+            }
+        });
+        return listReadersWithLogin.get(0);
     }
 }
