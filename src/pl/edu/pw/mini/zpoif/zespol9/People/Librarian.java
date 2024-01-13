@@ -76,10 +76,15 @@ public class Librarian extends Person implements CheckOutDesk {
     }
 
     @Override
-    public void CheckOutBookFromReservedBooks(String login, Book book) {
-        book.status = Status.Available;
-        checkOutBook(login, book);
+    public boolean CheckOutBookFromReservedBooks(String login, Book book) {
         Reader reader = systemAccess.getReader(login);
-        reader.getReservedBooks().remove(book);
+        if (reader.getReservedBooks().contains(book)) {
+            book.status = Status.Available;
+            checkOutBook(login, book);
+            reader.getReservedBooks().remove(book);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
