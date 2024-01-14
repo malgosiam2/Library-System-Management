@@ -78,7 +78,7 @@ public class LokigGui extends JFrame {
                                 JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                             }
                             break;
-                        } else JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
+                        }
                     }
 
                 } else if (loginUsedForSigning.startsWith("l")) {
@@ -94,7 +94,7 @@ public class LokigGui extends JFrame {
                             //odmowa dostepu
                             JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                         }
-                    } else JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
+                    }
 
 
                 } else {
