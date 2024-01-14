@@ -1,11 +1,15 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
 import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
+import pl.edu.pw.mini.zpoif.zespol9.Book.BookCondition;
 import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
+import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
 import pl.edu.pw.mini.zpoif.zespol9.Catalogue.Catalogue;
+import pl.edu.pw.mini.zpoif.zespol9.Exceptions.AlreadySeenThePasswordException;
 import pl.edu.pw.mini.zpoif.zespol9.Exceptions.NoReaderWithThatLoginException;
 import pl.edu.pw.mini.zpoif.zespol9.People.Librarian;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
+import pl.edu.pw.mini.zpoif.zespol9.People.SignInData;
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
 
 import javax.imageio.ImageIO;
@@ -468,8 +472,16 @@ public class LibrarianWindow extends JFrame {
                 double rating = Double.parseDouble(field4.getText());
                 Genre genre = (Genre) comboBox.getSelectedItem();
 
-                Book book = new Book(title, author, description, rating, 0, 0, 0, genre);
-                librarian.addBook(book);
+                if (title.equals("") | author.equals("") | description.equals("") | String.valueOf(rating).equals("")){
+                    JOptionPane.showMessageDialog(LibrarianWindow.this, "Please fill in all the fields!");
+                }
+                else {
+                    Book book = new Book(title, author, description, rating, 0, 0, 0, genre);
+                    book.status = Status.Available;
+                    book.bookCondition = BookCondition.AsNew;
+                    librarian.addBook(book);
+                    JOptionPane.showMessageDialog(LibrarianWindow.this, "You have successfully added a book!");
+                }
             }
         });
 
@@ -541,11 +553,30 @@ public class LibrarianWindow extends JFrame {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 String name = field1.getText();
                 String surname = field2.getText();
-                librarian.addUser(name, surname);
-                JOptionPane.showMessageDialog(LibrarianWindow.this, "New User has been added!");
 
+                if (name.equals("") | surname.equals("")){
+                    JOptionPane.showMessageDialog(LibrarianWindow.this, "Please fill in all the fields");
+                }
+                else {
+                    SignInData signInData = librarian.addUser(name, surname);
+                    String login = signInData.getLogin();
+                    String password;
+                    try {
+                        password = signInData.getNewPassword();
+                    } catch (AlreadySeenThePasswordException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    String message = "New User has been added!\n"
+                            + "Login: " + login + "\n"
+                            + "Password:  " + password;
+
+                    JOptionPane.showMessageDialog(LibrarianWindow.this, message);
+
+                }
             }
         });
 
@@ -584,7 +615,7 @@ public class LibrarianWindow extends JFrame {
 
         JLabel jLabelSearch = new JLabel("Choose User: ");
         JTextField jTextSearch = new JTextField();
-        JButton jButtonSearch = new JButton("Search");
+        JButton jButtonSearch = new JButton("Search (by login)");
         searchLoginPanel.add(jLabelSearch);
         searchLoginPanel.add(jTextSearch);
         searchLoginPanel.add(jButtonSearch);
