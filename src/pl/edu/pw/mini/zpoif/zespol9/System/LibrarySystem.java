@@ -9,6 +9,7 @@ import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class LibrarySystem implements SystemAccess, CatalogueAccess {
 
@@ -54,7 +55,7 @@ public class LibrarySystem implements SystemAccess, CatalogueAccess {
     public Reader getReader(String login) throws NoReaderWithThatLoginException {
         Reader reader = null;
         for (Reader r : readerList) {
-            if (r.getSignInData().getLogin() == login) {
+            if (Objects.equals(r.getSignInData().getLogin(), login)) {
                 reader = r;
             }
         }

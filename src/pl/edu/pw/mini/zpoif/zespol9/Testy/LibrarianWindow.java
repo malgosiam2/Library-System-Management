@@ -433,7 +433,7 @@ public class LibrarianWindow extends JFrame {
                 Genre genre = (Genre) comboBox.getSelectedItem();
 
                 Book book = new Book(title, author, description, rating, 0, 0, 0, genre);
-                Catalogue.getCatalogue().add(book);
+                librarian.addBook(book);
             }
         });
 
@@ -500,10 +500,7 @@ public class LibrarianWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String name = field1.getText();
                 String surname = field2.getText();
-
-                Reader reader = new Reader(name, surname, librarySystem);
-                librarySystem.getReaderList().add(reader);
-
+                librarian.addUser(name, surname);
                 JOptionPane.showMessageDialog(LibrarianWindow.this, "New User has been added!");
 
             }
@@ -563,15 +560,16 @@ public class LibrarianWindow extends JFrame {
                     throw new RuntimeException(ex);
                 }
 
-                PanelWithScrollPane panelWithScrollPane = new PanelWithScrollPane("Reserved Books", myReader);
-                PanelWithScrollPane panelWithScrollPane1 = new PanelWithScrollPane("Checked Out Books", myReader);
+                PanelWithScrollPane panelWithScrollPane = new PanelWithScrollPane("Reserved Books", myReader, "Check Out Book", librarian);
+                PanelWithScrollPane panelWithScrollPane1 = new PanelWithScrollPane("Checked Out Books", myReader, "Return Book", librarian);
                 panelWithScrollPane.createPanel(reservedBooksPanel);
                 panelWithScrollPane1.createPanel(checkedOutBooksPanel);
 
+                reservedBooksPanel.repaint();
                 reservedBooksPanel.revalidate();
-                //reservedBooksPanel.repaint();
+                checkedOutBooksPanel.repaint();
                 checkedOutBooksPanel.revalidate();
-                //checkedOutBooksPanel.repaint();
+
 
             }
         });
