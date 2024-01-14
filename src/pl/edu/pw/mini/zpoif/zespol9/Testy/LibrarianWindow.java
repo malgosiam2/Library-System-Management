@@ -172,6 +172,8 @@ public class LibrarianWindow extends JFrame {
         labelTextCatalogue.setSize(new Dimension(910, 50));
         labelTextCatalogue.setText("<HTML>Search</HTML>");
         Font font = new Font("Serif", Font.BOLD, 15);
+        Font font1 = new Font("Serif", Font.PLAIN, 15);
+
         labelTextCatalogue.setFont(font);
         labelTextCatalogue.setBounds(5, 5, 910, 20);
         upperPanel.add(labelTextCatalogue);
@@ -186,6 +188,7 @@ public class LibrarianWindow extends JFrame {
         titleSearchButton.setBounds(375, 50, 80, 25);
 
         titleSearchLabel.setFont(font);
+        titleSearchField.setFont(font1);
         titleSearchButton.setFont(font);
 
         upperPanel.add(titleSearchLabel);
@@ -218,6 +221,7 @@ public class LibrarianWindow extends JFrame {
         authorSearchButton.setBounds(375, 80, 80, 25);
 
         authorSearchLabel.setFont(font);
+        authorSearchField.setFont(font1);
         authorSearchButton.setFont(font);
 
         upperPanel.add(authorSearchLabel);
@@ -234,7 +238,6 @@ public class LibrarianWindow extends JFrame {
 
                 columnpanel.removeAll();
                 printCatalogue(columnpanel, booksList);
-
             }
         });
         // end search by author
@@ -249,7 +252,7 @@ public class LibrarianWindow extends JFrame {
         idSearchButton.setBounds(375, 110, 80, 25);
 
         idSearchLabel.setFont(font);
-        idSearchField.setFont(font);
+        idSearchField.setFont(font1);
         idSearchButton.setFont(font);
 
         upperPanel.add(idSearchLabel);
@@ -274,7 +277,7 @@ public class LibrarianWindow extends JFrame {
         splitPane.setTopComponent(upperPanel);
         splitPane.setBottomComponent(scrollPane);
 
-        splitPane.getTopComponent().setMinimumSize(new Dimension(920, 200));
+        splitPane.getTopComponent().setMinimumSize(new Dimension(0, 200));
         splitPane.getTopComponent().setMaximumSize(new Dimension(920, 200));
 
         splitPane.setEnabled(false);
