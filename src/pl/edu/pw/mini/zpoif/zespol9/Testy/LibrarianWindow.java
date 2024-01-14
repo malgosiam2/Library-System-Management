@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LibrarianWindow extends JFrame {
 
@@ -278,6 +279,38 @@ public class LibrarianWindow extends JFrame {
             }
         });
         // end search by id
+
+        // show damaged books
+        JLabel demagedBooks = new JLabel("Display list of damaged books");
+        JButton demagedBooksButton = new JButton("Display");
+
+        demagedBooks.setBounds(5, 140, 250, 25);
+        demagedBooksButton.setBounds(375, 140, 80, 25);
+
+        demagedBooks.setFont(font);
+        demagedBooksButton.setFont(font);
+
+        upperPanel.add(demagedBooks);
+        upperPanel.add(demagedBooksButton);
+
+        demagedBooksButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Book> booksList = librarySystem.getCatalogue().getCatalogue();
+                booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
+
+                List<Book> listOfDamagedBooks = booksList.stream()
+                        .filter(book -> book.bookCondition.equals(BookCondition.Damaged))
+                        .sorted(Comparator.comparing(book -> book.title.toLowerCase()))
+                        .collect(Collectors.toList());
+
+                columnpanel.removeAll();
+                printCatalogue(columnpanel, listOfDamagedBooks);
+
+            }
+        });
+        // end show damaged books
+
 
         splitPane.setTopComponent(upperPanel);
         splitPane.setBottomComponent(scrollPane);
