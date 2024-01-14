@@ -167,6 +167,7 @@ public class LibrarianWindow extends JFrame {
         columnpanel.setLayout(new GridLayout(0, 1, 0, 1));
         columnpanel.setBackground(Color.gray);
 
+        //upper panel
         JLabel labelTextCatalogue = new JLabel();
         labelTextCatalogue.setSize(new Dimension(910, 50));
         labelTextCatalogue.setText("<HTML>Search</HTML>");
@@ -236,7 +237,7 @@ public class LibrarianWindow extends JFrame {
 
             }
         });
-        // end search by id
+        // end search by author
 
         // search by id
         JLabel idSearchLabel = new JLabel("Search by id: ");
@@ -268,12 +269,12 @@ public class LibrarianWindow extends JFrame {
 
             }
         });
-        // end search by author
+        // end search by id
 
         splitPane.setTopComponent(upperPanel);
         splitPane.setBottomComponent(scrollPane);
 
-        splitPane.getTopComponent().setMinimumSize(new Dimension(0, 200));
+        splitPane.getTopComponent().setMinimumSize(new Dimension(920, 200));
         splitPane.getTopComponent().setMaximumSize(new Dimension(920, 200));
 
         splitPane.setEnabled(false);
@@ -330,7 +331,23 @@ public class LibrarianWindow extends JFrame {
         addDeleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int choice = JOptionPane.showConfirmDialog(rowPanel, "Are you sure you want to delete this book?", "Confirmation", JOptionPane.YES_NO_OPTION);
 
+                if (choice == JOptionPane.YES_NO_OPTION){
+                    librarian.deleteBook(book);
+
+                    rowPanel.removeAll();
+                    rowPanel.setLayout(null);
+
+                    JLabel label = new JLabel("<html>This book has been successfully deleted from catalogue</html>");
+                    label.setFont(font);
+                    label.setBounds(15, 25, 500, 40);
+                    label.setVisible(true);
+                    rowPanel.add(label);
+
+                    rowPanel.revalidate();
+                    rowPanel.repaint();
+                }
             }
         });
         rowPanel.add(addDeleteButton);
@@ -341,6 +358,7 @@ public class LibrarianWindow extends JFrame {
 
     private void implementAddBook(JPanel jPanel){
         jPanel.setLayout(new FlowLayout());
+        jPanel.setBackground(new Color(238, 232, 223, 255));
 
         JPanel jPanelMain = new JPanel();
         JPanel jPanelTitle = new JPanel();
@@ -349,6 +367,14 @@ public class LibrarianWindow extends JFrame {
         JPanel jPanelBookRating = new JPanel();
         JPanel jPanelGenre = new JPanel();
         JPanel jPanelAddBook = new JPanel();
+
+        jPanelMain.setBackground(new Color(238, 232, 223, 255));
+        jPanelTitle.setBackground(new Color(238, 232, 223, 255));
+        jPanelAuthor.setBackground(new Color(238, 232, 223, 255));
+        jPanelDescription.setBackground(new Color(238, 232, 223, 255));
+        jPanelBookRating.setBackground(new Color(238, 232, 223, 255));
+        jPanelGenre.setBackground(new Color(238, 232, 223, 255));
+        jPanelAddBook.setBackground(new Color(238, 232, 223, 255));
 
         jPanelMain.setPreferredSize(new Dimension(jPanel.getWidth(), 100));
         jPanelTitle.setPreferredSize(new Dimension(jPanel.getWidth(), 70));
@@ -360,6 +386,7 @@ public class LibrarianWindow extends JFrame {
 
         Font font = new Font("Serif", Font.BOLD, 18);
         Font font1 = new Font("Serif", Font.BOLD, 22);
+        Font font2 = new Font("Serif", Font.PLAIN, 14);
 
         JLabel main = new JLabel("Add Book:");
         main.setFont(font1);
@@ -369,10 +396,11 @@ public class LibrarianWindow extends JFrame {
         JLabel tekst1 = new JLabel("Title:");
         tekst1.setFont(font);
         JTextField field1 = new JTextField();
+        field1.setFont(font2);
         field1.setBackground(new Color(239, 221, 191, 255));
 
-        tekst1.setPreferredSize(new Dimension(200, 50));
-        field1.setPreferredSize(new Dimension(200, 50));
+        tekst1.setPreferredSize(new Dimension(150, 30));
+        field1.setPreferredSize(new Dimension(150, 30));
         jPanelTitle.add(tekst1);
         jPanelTitle.add(field1);
 
@@ -380,10 +408,11 @@ public class LibrarianWindow extends JFrame {
         JLabel tekst2 = new JLabel("Author:");
         tekst2.setFont(font);
         JTextField field2 = new JTextField();
+        field2.setFont(font2);
         field2.setBackground(new Color(239, 221, 191, 255));
 
-        tekst2.setPreferredSize(new Dimension(200, 50));
-        field2.setPreferredSize(new Dimension(200, 50));
+        tekst2.setPreferredSize(new Dimension(150, 30));
+        field2.setPreferredSize(new Dimension(150, 30));
         jPanelAuthor.add(tekst2);
         jPanelAuthor.add(field2);
 
@@ -391,10 +420,11 @@ public class LibrarianWindow extends JFrame {
         JLabel tekst3 = new JLabel("Description:");
         tekst3.setFont(font);
         JTextField field3 = new JTextField();
+        field3.setFont(font2);
         field3.setBackground(new Color(239, 221, 191, 255));
 
-        tekst3.setPreferredSize(new Dimension(200, 50));
-        field3.setPreferredSize(new Dimension(400, 50));
+        tekst3.setPreferredSize(new Dimension(150, 30));
+        field3.setPreferredSize(new Dimension(350, 30));
         jPanelDescription.add(tekst3);
         jPanelDescription.add(field3);
 
@@ -402,10 +432,11 @@ public class LibrarianWindow extends JFrame {
         JLabel tekst4 = new JLabel("Book Rating:");
         tekst4.setFont(font);
         JTextField field4 = new JTextField();
+        field4.setFont(font2);
         field4.setBackground(new Color(239, 221, 191, 255));
 
-        tekst4.setPreferredSize(new Dimension(200, 50));
-        field4.setPreferredSize(new Dimension(200, 50));
+        tekst4.setPreferredSize(new Dimension(150, 30));
+        field4.setPreferredSize(new Dimension(150, 30));
         jPanelBookRating.add(tekst4);
         jPanelBookRating.add(field4);
 
@@ -416,9 +447,10 @@ public class LibrarianWindow extends JFrame {
         Genre[] genres = Genre.values();
         JComboBox<Genre> comboBox = new JComboBox<>(genres);
 
-        tekst5.setPreferredSize(new Dimension(200, 50));
-        comboBox.setPreferredSize(new Dimension(200, 50));
+        tekst5.setPreferredSize(new Dimension(150, 30));
+        comboBox.setPreferredSize(new Dimension(150, 30));
         comboBox.setBackground(new Color(239, 221, 191, 255));
+        comboBox.setFont(font2);
         jPanelGenre.add(tekst5);
         jPanelGenre.add(comboBox);
 
@@ -439,7 +471,7 @@ public class LibrarianWindow extends JFrame {
 
         jPanelAddBook.setLayout(new FlowLayout(FlowLayout.CENTER));
         jPanelAddBook.add(addButton);
-        addButton.setPreferredSize(new Dimension(200, 50));
+        addButton.setPreferredSize(new Dimension(150, 50));
 
         jPanel.add(jPanelMain);
         jPanel.add(jPanelTitle);
@@ -457,15 +489,20 @@ public class LibrarianWindow extends JFrame {
     private void implementAddUser(JPanel jPanel){
 
         jPanel.setLayout(new FlowLayout());
+        jPanel.setBackground(new Color(238, 232, 223, 255));
 
         JPanel jPanelMain = new JPanel();
         JPanel jPanelName = new JPanel();
         JPanel jPanelSurname = new JPanel();
+        jPanelMain.setBackground(new Color(238, 232, 223, 255));
+        jPanelName.setBackground(new Color(238, 232, 223, 255));
+        jPanelSurname.setBackground(new Color(238, 232, 223, 255));
         jPanelMain.setPreferredSize(new Dimension(jPanel.getWidth(), 100));
         jPanelName.setPreferredSize(new Dimension(jPanel.getWidth(), 70));
         jPanelSurname.setPreferredSize(new Dimension(jPanel.getWidth(), 70));
         Font font = new Font("Serif", Font.BOLD, 18);
         Font font1 = new Font("Serif", Font.BOLD, 22);
+        Font font2 = new Font("Serif", Font.PLAIN, 14);
 
         JLabel main = new JLabel("Add User:");
         main.setFont(font1);
@@ -473,23 +510,25 @@ public class LibrarianWindow extends JFrame {
 
         jPanelName.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel tekst1 = new JLabel("Name:");
-        tekst1.setFont(font);
+        tekst1.setFont(font1);
         JTextField field1 = new JTextField();
         field1.setBackground(new Color(239, 221, 191, 255));
+        field1.setFont(font2);
 
-        tekst1.setPreferredSize(new Dimension(200, 50));
-        field1.setPreferredSize(new Dimension(200, 50));
+        tekst1.setPreferredSize(new Dimension(150, 30));
+        field1.setPreferredSize(new Dimension(150, 30));
         jPanelName.add(tekst1);
         jPanelName.add(field1);
 
         jPanelSurname.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel tekst2 = new JLabel("Surname:");
-        tekst2.setFont(font);
+        tekst2.setFont(font1);
         JTextField field2 = new JTextField();
         field2.setBackground(new Color(239, 221, 191, 255));
+        field2.setFont(font2);
 
-        tekst2.setPreferredSize(new Dimension(200, 50));
-        field2.setPreferredSize(new Dimension(200, 50));
+        tekst2.setPreferredSize(new Dimension(150, 30));
+        field2.setPreferredSize(new Dimension(150, 30));
         jPanelSurname.add(tekst2);
         jPanelSurname.add(field2);
 
@@ -508,14 +547,13 @@ public class LibrarianWindow extends JFrame {
 
         addUser.setLayout(new FlowLayout(FlowLayout.CENTER));
         addUser.add(addButton);
-        addButton.setPreferredSize(new Dimension(200, 50));
+        addButton.setPreferredSize(new Dimension(150, 30));
 
 
         jPanel.add(jPanelMain);
         jPanel.add(jPanelName);
         jPanel.add(jPanelSurname);
         jPanel.add(addUser);
-
 
         jPanel.revalidate();
         jPanel.repaint();
@@ -524,6 +562,9 @@ public class LibrarianWindow extends JFrame {
 
     private void implementLibraryManagement(JPanel jPanel){
         jPanel.setLayout(new GridLayout(3, 1));
+
+        Font font = new Font("Serif", Font.BOLD, 18);
+        Font font1 = new Font("Serif", Font.PLAIN, 14);
 
         JPanel searchLoginPanel = new JPanel();
         searchLoginPanel.setBackground(new Color(238, 232, 223, 255));
@@ -543,8 +584,11 @@ public class LibrarianWindow extends JFrame {
         searchLoginPanel.add(jLabelSearch);
         searchLoginPanel.add(jTextSearch);
         searchLoginPanel.add(jButtonSearch);
-        jTextSearch.setPreferredSize(new Dimension(200, 70));
-        jButtonSearch.setPreferredSize(new Dimension(200, 70));
+        jTextSearch.setPreferredSize(new Dimension(200, 40));
+        jButtonSearch.setPreferredSize(new Dimension(200, 40));
+        jLabelSearch.setFont(font);
+        jTextSearch.setFont(font1);
+        jButtonSearch.setFont(font);
 
         jButtonSearch.addActionListener(new ActionListener() {
             @Override
@@ -573,7 +617,6 @@ public class LibrarianWindow extends JFrame {
 
             }
         });
-
 
         jPanel.revalidate();
         jPanel.repaint();
