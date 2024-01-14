@@ -618,7 +618,7 @@ public class ReaderWindow extends JFrame {
         elementList.setBackground(new Color(238, 232, 223, 255));
         reservedBooksPanel.add(scrollPane1);
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //checked out books:
         JLabel jCheckedOut = new JLabel("Checked Out Books: ");
         jCheckedOut.setFont(font1);
