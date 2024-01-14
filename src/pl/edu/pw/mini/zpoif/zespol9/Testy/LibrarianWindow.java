@@ -639,7 +639,7 @@ public class LibrarianWindow extends JFrame {
                     throw new RuntimeException(ex);
                 }
 
-                PanelWithScrollPane panelWithScrollPane = new PanelWithScrollPane(reservedBooksPanel, checkedOutBooksPanel, myReader, librarian);
+                PanelWithScrollPane panelWithScrollPane = new PanelWithScrollPane("Librarian", reservedBooksPanel, checkedOutBooksPanel, myReader, librarian, "Reserved Books:", "Checked Out Books", "Check Out", "Return");
                 panelWithScrollPane.createPanel();
 
                 reservedBooksPanel.repaint();

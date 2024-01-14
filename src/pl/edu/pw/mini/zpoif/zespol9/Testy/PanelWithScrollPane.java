@@ -20,29 +20,46 @@ public class PanelWithScrollPane extends JPanel {
 
     private Reader myReader;
     private Librarian librarian;
-    private JPanel reservedBooksPanel;
-    private JPanel checkedOutBooksPanel;
+    private JPanel jPanel1;
+    private JPanel jPanel2;
+    private String title1;
+    private String title2;
+    private String panel;
+    private String button1;
+    private String button2;
 
-    public PanelWithScrollPane(JPanel reservedBookaPanel, JPanel checkedOutBooksPanel, Reader myReader, Librarian librarian){
+    public PanelWithScrollPane(String panel, JPanel jPanel1, JPanel jPanel2, Reader myReader, Librarian librarian, String title1, String title2, String button1, String button2){
 
         this.myReader = myReader;
-        this.checkedOutBooksPanel = checkedOutBooksPanel;
-        this.reservedBooksPanel = reservedBookaPanel;
+        this.jPanel2 = jPanel2;
+        this.jPanel1 = jPanel1;
         this.librarian = librarian;
+        this.title1 = title1;
+        this.title2 = title2;
+        this.panel = panel;
+        this.button1 = button1;
+        this.button2 = button2;
     }
 
     public void createPanel(){
         DefaultListModel<PanelWithScrollPane.ClassWithComponentsToBePrinted> defaultListModel = new DefaultListModel<>();
         DefaultListModel<PanelWithScrollPane.ClassWithComponentsToBePrinted> defaultListModel1 = new DefaultListModel<>();
 
-        reservedBooksPanel.setBackground(new Color(238, 232, 223, 255));
-        checkedOutBooksPanel.setBackground(new Color(238, 232, 223, 255));
+        jPanel1.setBackground(new Color(238, 232, 223, 255));
+        jPanel2.setBackground(new Color(238, 232, 223, 255));
 
-        JLabel jReserved = new JLabel("Reserved Books");
+        JLabel jReserved = new JLabel(title1);
 ////                jCheckedOut.setFont(font1);
-        reservedBooksPanel.add(jReserved);
-        reservedBooksPanel.setLayout(new FlowLayout());
-        List<Book> listReader = myReader.getReservedBooks();
+        jPanel1.add(jReserved);
+        jPanel1.setLayout(new FlowLayout());
+
+        List<Book> listReader;
+        if (panel.equals("reader")){
+            listReader = myReader.getToReadBooks();
+        } else {
+            listReader = myReader.getReservedBooks();
+        }
+
         List<PanelWithScrollPane.ClassWithComponentsToBePrinted> toBePrinted = new ArrayList<>();
         for (Book book: listReader) {
             toBePrinted.add(new PanelWithScrollPane.ClassWithComponentsToBePrinted(book));
@@ -52,7 +69,7 @@ public class PanelWithScrollPane extends JPanel {
             defaultListModel.addElement(toBePrinted.get(i));
         }
 
-        JButton jButton = new JButton("Check Out Book");
+        JButton jButton = new JButton(button1);
         JList<PanelWithScrollPane.ClassWithComponentsToBePrinted> elementList = new JList<>(defaultListModel);
 
         jButton.addActionListener(new ActionListener() {
@@ -63,25 +80,37 @@ public class PanelWithScrollPane extends JPanel {
                 if (selectedIndex != -1) {
                     PanelWithScrollPane.ClassWithComponentsToBePrinted selectedBook = defaultListModel.getElementAt(selectedIndex);
                     Book book = selectedBook.book;
-                    try {
-                        librarian.CheckOutBookFromReservedBooks(myReader.getSignInData().getLogin(), book);
-                        JOptionPane.showMessageDialog(PanelWithScrollPane.this, "The book has been checked out");
-                        defaultListModel.remove(selectedIndex);
-                        defaultListModel1.addElement(selectedBook);
-                        checkedOutBooksPanel.revalidate();
-                        checkedOutBooksPanel.repaint();
-                        reservedBooksPanel.revalidate();
-                        reservedBooksPanel.repaint();
 
-                    } catch (NoReaderWithThatLoginException ex) {
-                        throw new RuntimeException(ex);
+                    if (panel.equals("reader")){
+                        // implement delete 'to read'
+                        myReader.deleteToReadBook(book);
+                        defaultListModel.remove(selectedIndex);
+                        jPanel1.revalidate();
+                        jPanel1.repaint();
+                    }
+                    else {
+
+                        try {
+                            librarian.CheckOutBookFromReservedBooks(myReader.getSignInData().getLogin(), book);
+                            JOptionPane.showMessageDialog(PanelWithScrollPane.this, "The book has been checked out");
+                            defaultListModel.remove(selectedIndex);
+                            PanelWithScrollPane.ClassWithComponentsToBePrinted x = new PanelWithScrollPane.ClassWithComponentsToBePrinted(book, myReader.getCheckedOutBooks().get(book));
+                            defaultListModel1.addElement(x);
+                            jPanel2.revalidate();
+                            jPanel2.repaint();
+                            jPanel1.revalidate();
+                            jPanel1.repaint();
+
+                        } catch (NoReaderWithThatLoginException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }
 
             }
         });
         jButton.setEnabled(false);
-        reservedBooksPanel.add(jButton);
+        jPanel1.add(jButton);
         elementList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         elementList.addListSelectionListener(new ListSelectionListener() {
@@ -99,12 +128,12 @@ public class PanelWithScrollPane extends JPanel {
         scrollPane.getViewport().setBackground(new Color(238, 232, 223, 255));
         scrollPane.setViewportBorder(BorderFactory.createLineBorder(new Color(238, 232, 223, 255), 2));
         elementList.setBackground(new Color(238, 232, 223, 255));
-        reservedBooksPanel.add(scrollPane);
+        jPanel1.add(scrollPane);
 
-        JLabel jCheckedOut = new JLabel("Checked Out Books");
+        JLabel jCheckedOut = new JLabel(title2);
 ////                jCheckedOut.setFont(font1);
-        checkedOutBooksPanel.add(jCheckedOut);
-        checkedOutBooksPanel.setLayout(new FlowLayout());
+        jPanel2.add(jCheckedOut);
+        jPanel2.setLayout(new FlowLayout());
 
         Map<Book, LocalDate> mapReader = myReader.getCheckedOutBooks();
         List<PanelWithScrollPane.ClassWithComponentsToBePrinted> toBePrinted1 = new ArrayList<>();
@@ -117,7 +146,7 @@ public class PanelWithScrollPane extends JPanel {
         }
 
 
-        JButton jButton1 = new JButton("Return Book");
+        JButton jButton1 = new JButton(button2);
         JList<PanelWithScrollPane.ClassWithComponentsToBePrinted> elementList1 = new JList<>(defaultListModel1);
 
         jButton1.addActionListener(new ActionListener() {
@@ -128,6 +157,12 @@ public class PanelWithScrollPane extends JPanel {
                 if (selectedIndex != -1) {
                     PanelWithScrollPane.ClassWithComponentsToBePrinted selectedBook = defaultListModel1.getElementAt(selectedIndex);
                     Book book = selectedBook.book;
+
+                    if (panel.equals("reader")){
+                        myReader.postponeReturnDate(book);
+                        PanelWithScrollPane.ClassWithComponentsToBePrinted x = new PanelWithScrollPane.ClassWithComponentsToBePrinted(book, myReader.getCheckedOutBooks().get(book));
+                        defaultListModel1.setElementAt(x, selectedIndex);
+                    }else {
                         try {
                             librarian.acceptBookReturn(myReader.getSignInData().getLogin(), book, book.bookCondition);
                             defaultListModel1.remove(selectedIndex);
@@ -137,12 +172,13 @@ public class PanelWithScrollPane extends JPanel {
                         } catch (NoReaderWithThatLoginException ex) {
                             throw new RuntimeException(ex);
                         }
+                    }
                 }
 
             }
         });
         jButton1.setEnabled(false);
-        checkedOutBooksPanel.add(jButton1);
+        jPanel2.add(jButton1);
 
         elementList1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -162,7 +198,7 @@ public class PanelWithScrollPane extends JPanel {
         scrollPane1.getViewport().setBackground(new Color(238, 232, 223, 255));
         scrollPane1.setViewportBorder(BorderFactory.createLineBorder(new Color(238, 232, 223, 255), 2));
         elementList1.setBackground(new Color(238, 232, 223, 255));
-        checkedOutBooksPanel.add(scrollPane1);
+        jPanel2.add(scrollPane1);
     }
 
     public class ClassWithComponentsToBePrinted{
