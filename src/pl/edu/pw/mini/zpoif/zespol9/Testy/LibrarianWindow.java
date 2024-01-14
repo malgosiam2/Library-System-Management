@@ -144,6 +144,7 @@ public class LibrarianWindow extends JFrame {
 
     private void implementCatalogue(LibrarySystem librarySystem) {
         JPanel rightPanel = (JPanel) getContentPane().getComponent(2);
+        rightPanel.setLayout(new BorderLayout());
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitPane.setBackground(new Color(206, 190, 170, 255));
