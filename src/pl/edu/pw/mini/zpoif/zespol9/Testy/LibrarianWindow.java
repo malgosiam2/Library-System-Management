@@ -1,9 +1,6 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
-import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
-import pl.edu.pw.mini.zpoif.zespol9.Book.BookCondition;
-import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
-import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
+import pl.edu.pw.mini.zpoif.zespol9.Book.*;
 import pl.edu.pw.mini.zpoif.zespol9.Catalogue.Catalogue;
 import pl.edu.pw.mini.zpoif.zespol9.Exceptions.AlreadySeenThePasswordException;
 import pl.edu.pw.mini.zpoif.zespol9.Exceptions.NoReaderWithThatLoginException;
@@ -438,6 +435,7 @@ public class LibrarianWindow extends JFrame {
         JPanel jPanelDescription = new JPanel();
         JPanel jPanelBookRating = new JPanel();
         JPanel jPanelGenre = new JPanel();
+        JPanel jPanelBookFormat = new JPanel();
         JPanel jPanelAddBook = new JPanel();
 
         jPanelMain.setBackground(new Color(238, 232, 223, 255));
@@ -446,6 +444,7 @@ public class LibrarianWindow extends JFrame {
         jPanelDescription.setBackground(new Color(238, 232, 223, 255));
         jPanelBookRating.setBackground(new Color(238, 232, 223, 255));
         jPanelGenre.setBackground(new Color(238, 232, 223, 255));
+        jPanelBookFormat.setBackground(new Color(238, 232, 223, 255));
         jPanelAddBook.setBackground(new Color(238, 232, 223, 255));
 
         jPanelMain.setPreferredSize(new Dimension(jPanel.getWidth(), 100));
@@ -454,6 +453,7 @@ public class LibrarianWindow extends JFrame {
         jPanelDescription.setPreferredSize(new Dimension(jPanel.getWidth(), 70));
         jPanelBookRating.setPreferredSize(new Dimension(jPanel.getWidth(), 70));
         jPanelGenre.setPreferredSize(new Dimension(jPanel.getWidth(), 70));
+        jPanelBookFormat.setPreferredSize(new Dimension(jPanel.getWidth(), 70));
         jPanelAddBook.setPreferredSize(new Dimension(jPanel.getWidth(), 80));
 
         Font font = new Font("Serif", Font.BOLD, 18);
@@ -526,6 +526,21 @@ public class LibrarianWindow extends JFrame {
         jPanelGenre.add(tekst5);
         jPanelGenre.add(comboBox);
 
+
+
+        jPanelBookFormat.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JLabel tekst6 = new JLabel("Book Format:");
+        tekst6.setFont(font);
+        BookFormat[] bookFormats = BookFormat.values();
+        JComboBox<BookFormat> comboBoxBookFormat = new JComboBox<>(bookFormats);
+
+        tekst6.setPreferredSize(new Dimension(150, 30));
+        comboBoxBookFormat.setPreferredSize(new Dimension(150, 30));
+        comboBoxBookFormat.setBackground(new Color(239, 221, 191, 255));
+        comboBoxBookFormat.setFont(font2);
+        jPanelBookFormat.add(tekst6);
+        jPanelBookFormat.add(comboBoxBookFormat);
+
         JButton addButton = new JButton("Add Book");
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -533,18 +548,33 @@ public class LibrarianWindow extends JFrame {
                 String title = field1.getText();
                 String author = field2.getText();
                 String description = field3.getText();
-                double rating = Double.parseDouble(field4.getText());
+                String rating = field4.getText();
+                //double rating = Double.parseDouble(field4.getText());
                 Genre genre = (Genre) comboBox.getSelectedItem();
+                BookFormat bookFormat = (BookFormat) comboBoxBookFormat.getSelectedItem();
 
                 if (title.equals("") | author.equals("") | description.equals("") | String.valueOf(rating).equals("")){
                     JOptionPane.showMessageDialog(LibrarianWindow.this, "Please fill in all the fields!");
                 }
                 else {
-                    Book book = new Book(title, author, description, rating, 0, 0, 0, genre);
-                    book.status = Status.Available;
-                    book.bookCondition = BookCondition.AsNew;
-                    librarian.addBook(book);
-                    JOptionPane.showMessageDialog(LibrarianWindow.this, "You have successfully added a book!");
+                    double ratingDouble;
+                    try {
+                        ratingDouble = Double.parseDouble(rating);
+                        if (ratingDouble >= 0 & ratingDouble <= 5){
+                            Book book = new Book(title, author, description, ratingDouble, genre, bookFormat);
+                            librarian.addBook(book);
+                            JOptionPane.showMessageDialog(LibrarianWindow.this, "You have successfully added a book!");
+                            field1.setText("");
+                            field2.setText("");
+                            field3.setText("");
+                            field4.setText("");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(LibrarianWindow.this, "Book rating should be less or equal 5 and bigger or equal 0!");
+                        }
+                    }catch (NumberFormatException exception){
+                        JOptionPane.showMessageDialog(LibrarianWindow.this, "Book Rating must be a number!");
+                    }
                 }
             }
         });
@@ -559,8 +589,8 @@ public class LibrarianWindow extends JFrame {
         jPanel.add(jPanelDescription);
         jPanel.add(jPanelBookRating);
         jPanel.add(jPanelGenre);
+        jPanel.add(jPanelBookFormat);
         jPanel.add(jPanelAddBook);
-
 
         jPanel.revalidate();
         jPanel.repaint();
@@ -639,7 +669,8 @@ public class LibrarianWindow extends JFrame {
                             + "Password:  " + password;
 
                     JOptionPane.showMessageDialog(LibrarianWindow.this, message);
-
+                    field1.setText("");
+                    field2.setText("");
                 }
             }
         });
@@ -699,18 +730,16 @@ public class LibrarianWindow extends JFrame {
                 Reader myReader = null;
                 try {
                     myReader = librarySystem.getReader(readerLogin);
+                    PanelWithScrollPane panelWithScrollPane = new PanelWithScrollPane("Librarian", reservedBooksPanel, checkedOutBooksPanel, myReader, librarian, "Reserved Books:", "Checked Out Books", "Check Out", "Return");
+                    panelWithScrollPane.createPanel();
+
                 } catch (NoReaderWithThatLoginException ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(searchLoginPanel, "There is no such user in our database.");
                 }
-
-                PanelWithScrollPane panelWithScrollPane = new PanelWithScrollPane("Librarian", reservedBooksPanel, checkedOutBooksPanel, myReader, librarian, "Reserved Books:", "Checked Out Books", "Check Out", "Return");
-                panelWithScrollPane.createPanel();
-
                 reservedBooksPanel.repaint();
                 reservedBooksPanel.revalidate();
                 checkedOutBooksPanel.repaint();
                 checkedOutBooksPanel.revalidate();
-
 
             }
         });

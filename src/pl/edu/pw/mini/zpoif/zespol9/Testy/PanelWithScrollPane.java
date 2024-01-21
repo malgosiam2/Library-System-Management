@@ -41,6 +41,89 @@ public class PanelWithScrollPane extends JPanel {
         this.button2 = button2;
     }
 
+    public PanelWithScrollPane(String panel, JPanel jPanel, Reader myReader, String title1, String button1){
+        this.panel = panel;
+        this.jPanel1 = jPanel;
+        this.myReader = myReader;
+        this.title1 = title1;
+        this.button1 = button1;
+    }
+
+
+    public void createSinglePanel(){
+
+        Font font1 = new Font("Serif", Font.BOLD, 16);
+        DefaultListModel<PanelWithScrollPane.ClassWithComponentsToBePrinted> defaultListModel = new DefaultListModel<>();
+
+        jPanel1.setBackground(new Color(238, 232, 223, 255));
+        JLabel jReserved = new JLabel(title1);
+        jReserved.setFont(font1);
+        jPanel1.add(jReserved);
+        jPanel1.setLayout(new FlowLayout());
+        List<Book> listReader = this.myReader.getReservedBooks();
+
+        List<PanelWithScrollPane.ClassWithComponentsToBePrinted> toBePrinted = new ArrayList<>();
+        for (Book book: listReader) {
+            toBePrinted.add(new PanelWithScrollPane.ClassWithComponentsToBePrinted(book));
+        }
+
+        for (int i = 0; i < listReader.size(); i ++){
+            defaultListModel.addElement(toBePrinted.get(i));
+        }
+
+        JButton jButton = new JButton(button1);
+        JList<PanelWithScrollPane.ClassWithComponentsToBePrinted> elementList = new JList<>(defaultListModel);
+
+        jButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = elementList.getSelectedIndex();
+                if (selectedIndex != -1) {
+                    PanelWithScrollPane.ClassWithComponentsToBePrinted selectedBook = defaultListModel.getElementAt(selectedIndex);
+                    Book book = selectedBook.book;
+
+                    if (panel.equals("reader")){
+
+                        int choice = JOptionPane.showConfirmDialog(jPanel1, "Are you sure you want to delete this book?", "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                        if (choice == JOptionPane.YES_NO_OPTION){
+                            myReader.deleteReservedBook(book);
+                            defaultListModel.remove(selectedIndex);
+                            jPanel1.revalidate();
+                            jPanel1.repaint();
+
+                            JOptionPane.showMessageDialog(jPanel1, "<html>This book has been successfully deleted from reserved books!</html>");
+
+                        }
+                    }
+
+                }
+            }
+        });
+
+        jButton.setEnabled(false);
+        jPanel1.add(jButton);
+        elementList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        elementList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                boolean isSelectionEmpty = elementList.isSelectionEmpty();
+                jButton.setEnabled(!isSelectionEmpty);
+            }
+        });
+
+        elementList.setCellRenderer(new PanelWithScrollPane.PrintInFourRows());
+        JScrollPane scrollPane = new JScrollPane(elementList);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setPreferredSize(new Dimension(800, 100));
+        scrollPane.getViewport().setBackground(new Color(238, 232, 223, 255));
+        scrollPane.setViewportBorder(BorderFactory.createLineBorder(new Color(238, 232, 223, 255), 2));
+        elementList.setBackground(new Color(238, 232, 223, 255));
+        jPanel1.add(scrollPane);
+    }
+
+
     public void createPanel(){
         DefaultListModel<PanelWithScrollPane.ClassWithComponentsToBePrinted> defaultListModel = new DefaultListModel<>();
         DefaultListModel<PanelWithScrollPane.ClassWithComponentsToBePrinted> defaultListModel1 = new DefaultListModel<>();
@@ -49,7 +132,6 @@ public class PanelWithScrollPane extends JPanel {
         jPanel2.setBackground(new Color(238, 232, 223, 255));
 
         JLabel jReserved = new JLabel(title1);
-////                jCheckedOut.setFont(font1);
         jPanel1.add(jReserved);
         jPanel1.setLayout(new FlowLayout());
 
@@ -82,11 +164,16 @@ public class PanelWithScrollPane extends JPanel {
                     Book book = selectedBook.book;
 
                     if (panel.equals("reader")){
-                        // implement delete 'to read'
-                        myReader.deleteToReadBook(book);
-                        defaultListModel.remove(selectedIndex);
-                        jPanel1.revalidate();
-                        jPanel1.repaint();
+                        int choice = JOptionPane.showConfirmDialog(jPanel1, "Are you sure you want to delete this book?", "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                        if (choice == JOptionPane.YES_NO_OPTION){
+                            myReader.deleteToReadBook(book);
+                            defaultListModel.remove(selectedIndex);
+                            jPanel1.revalidate();
+                            jPanel1.repaint();
+
+                            JOptionPane.showMessageDialog(jPanel1, "<html>This book has been successfully deleted from to read books!</html>");
+                        }
                     }
                     else {
 
@@ -131,7 +218,6 @@ public class PanelWithScrollPane extends JPanel {
         jPanel1.add(scrollPane);
 
         JLabel jCheckedOut = new JLabel(title2);
-////                jCheckedOut.setFont(font1);
         jPanel2.add(jCheckedOut);
         jPanel2.setLayout(new FlowLayout());
 
@@ -159,9 +245,16 @@ public class PanelWithScrollPane extends JPanel {
                     Book book = selectedBook.book;
 
                     if (panel.equals("reader")){
-                        myReader.postponeReturnDate(book);
-                        PanelWithScrollPane.ClassWithComponentsToBePrinted x = new PanelWithScrollPane.ClassWithComponentsToBePrinted(book, myReader.getCheckedOutBooks().get(book));
-                        defaultListModel1.setElementAt(x, selectedIndex);
+                        boolean postpone = myReader.postponeReturnDate(book);
+                        if (postpone){
+                            PanelWithScrollPane.ClassWithComponentsToBePrinted x = new PanelWithScrollPane.ClassWithComponentsToBePrinted(book, myReader.getCheckedOutBooks().get(book));
+                            defaultListModel1.setElementAt(x, selectedIndex);
+                            JOptionPane.showMessageDialog(jPanel1, "<html>You have successfully postponed the return date!");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(jPanel1, "<html>You cannot postpone a book twice!");
+                        }
+
                     }else {
                         try {
                             librarian.acceptBookReturn(myReader.getSignInData().getLogin(), book, book.bookCondition);
@@ -241,7 +334,6 @@ public class PanelWithScrollPane extends JPanel {
             dataLabel = new JLabel();
             emptuLabel = new JLabel();
 
-            // Dodanie etykiet do panelu
             add(titleLabel);
             add(authorLabel);
             add(dataLabel);

@@ -62,6 +62,7 @@ public class LokigGui extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String loginUsedForSigning = loginField.getText();
                 String passwordUsedForSigning = String.valueOf(passwordField.getPassword());
+                boolean exist = false;
 
                 if (loginUsedForSigning.startsWith("r")) {
                     List<Reader> tmpList = librarySystem.getReaderList();
@@ -70,16 +71,16 @@ public class LokigGui extends JFrame {
                         if (el.getSignInData().getLogin().equals(loginUsedForSigning)) {
 
                             if (el.getSignInData().isPasswordCorrect(passwordUsedForSigning)) {
+                                exist = true;
                                 addNewWindow("reader", el);
                                 dispose();
 
-                            } else {
-                                //odmowa dostepu
-                                JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                             }
                             break;
                         }
                     }
+
+                    if (!exist) JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
 
                 } else if (loginUsedForSigning.startsWith("l")) {
 
@@ -87,16 +88,14 @@ public class LokigGui extends JFrame {
 
                     if (librarian.getSignInData().getLogin().equals(loginUsedForSigning)) {
                         if (librarian.getSignInData().isPasswordCorrect(passwordUsedForSigning)) {
+                            exist = true;
                             addNewWindow("librarian", librarian);
                             dispose();
 
-                        } else {
-                            //odmowa dostepu
-                            JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                         }
                     }
 
-
+                    if (!exist) JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                 } else {
                     JOptionPane.showMessageDialog(LokigGui.this, "Wrong Login or Password!");
                 }

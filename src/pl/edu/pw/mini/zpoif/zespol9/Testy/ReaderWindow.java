@@ -658,30 +658,10 @@ public class ReaderWindow extends JFrame {
         JLabel j4 = new JLabel(String.valueOf(this.myReader.getFine()));
         j4.setFont(font1);
         upperPanel.add(j4);
-
-        // reserved books:
-
         reservedBooksPanel.setLayout(new FlowLayout());
-        reservedBooksPanel.setBackground(new Color(238, 232, 223, 255));
-        JLabel jReserved = new JLabel("Reserved Books:");
-        jReserved.setFont(font1);
-        reservedBooksPanel.add(jReserved);
 
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (Book el : myReader.getReservedBooks()) {
-            listModel.addElement("Title:    " + el.title);
-            listModel.addElement("Author:   " + el.author);
-            listModel.addElement(" ");
-        }
-        JList<String> elementList = new JList<>(listModel);
-        elementList.setSelectionBackground(null);
-        JScrollPane scrollPane1 = new JScrollPane(elementList);
-        scrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane1.setPreferredSize(new Dimension(800, 100));
-        scrollPane1.getViewport().setBackground(new Color(238, 232, 223, 255));
-        scrollPane1.setViewportBorder(BorderFactory.createEmptyBorder());
-        elementList.setBackground(new Color(238, 232, 223, 255));
-        reservedBooksPanel.add(scrollPane1);
+        PanelWithScrollPane panelWithScrollPaneReserved = new PanelWithScrollPane("reader", reservedBooksPanel, myReader, "Reserved Books:", "Delete From Reserved");
+        panelWithScrollPaneReserved.createSinglePanel();
 
         PanelWithScrollPane panelWithScrollPane = new PanelWithScrollPane("reader", toReadBooksPanel, checkedOutBooksPanel, myReader, null, "To Read Books:", "Checked Out Books:", "Delete", "Postpone Return Date");
         panelWithScrollPane.createPanel();
