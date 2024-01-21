@@ -646,14 +646,14 @@ public class LibrarianWindow extends JFrame {
 
         // search login panel:
 
-        JLabel jLabelSearch = new JLabel("Choose User: ");
+        JLabel jLabelSearch = new JLabel("Search User (by login): ");
         JTextField jTextSearch = new JTextField();
-        JButton jButtonSearch = new JButton("Search (by login)");
+        JButton jButtonSearch = new JButton("Search");
         searchLoginPanel.add(jLabelSearch);
         searchLoginPanel.add(jTextSearch);
         searchLoginPanel.add(jButtonSearch);
-        jTextSearch.setPreferredSize(new Dimension(200, 40));
-        jButtonSearch.setPreferredSize(new Dimension(200, 40));
+        jTextSearch.setPreferredSize(new Dimension(200, 30));
+        jButtonSearch.setPreferredSize(new Dimension(200, 30));
         jLabelSearch.setFont(font);
         jTextSearch.setFont(font1);
         jButtonSearch.setFont(font);
