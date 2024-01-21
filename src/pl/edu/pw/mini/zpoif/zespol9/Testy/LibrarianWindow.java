@@ -210,7 +210,13 @@ public class LibrarianWindow extends JFrame {
                 java.util.List<Book> booksList = librarySystem.getCatalogue().searchByTitle(titleText);
 
                 columnpanel.removeAll();
-                printCatalogue(columnpanel, booksList);
+                columnpanel.revalidate();
+                if (booksList.isEmpty()) {
+                    JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there is no book with the title '" + titleText
+                            + "' in our collection", "No such title", JOptionPane.INFORMATION_MESSAGE);
+                } else{
+                    printCatalogue(columnpanel, booksList);
+                }
 
             }
         });
@@ -243,7 +249,13 @@ public class LibrarianWindow extends JFrame {
                 booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
 
                 columnpanel.removeAll();
-                printCatalogue(columnpanel, booksList);
+                columnpanel.revalidate();
+                if (booksList.isEmpty()) {
+                    JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there are no books by '" + authorText
+                            + "' in our collection", "No such author", JOptionPane.INFORMATION_MESSAGE);
+                } else{
+                    printCatalogue(columnpanel, booksList);
+                }
             }
         });
         // end search by author
@@ -268,13 +280,27 @@ public class LibrarianWindow extends JFrame {
         idSearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id = Integer.parseInt(idSearchField.getText());
-                idSearchField.setText("");
-                List<Book> booksList = librarySystem.getCatalogue().searchById(id);
-                booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
+                try {
+                    int id = Integer.parseInt(idSearchField.getText());
+                    idSearchField.setText("");
+                    List<Book> booksList = librarySystem.getCatalogue().searchById(id);
+                    booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
 
-                columnpanel.removeAll();
-                printCatalogue(columnpanel, booksList);
+                    columnpanel.removeAll();
+                    columnpanel.revalidate();
+                    if (booksList.isEmpty()) {
+                        JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there is no book with " + id
+                                + " id number in our collection", "No such id", JOptionPane.INFORMATION_MESSAGE);
+                    } else{
+                        printCatalogue(columnpanel, booksList);
+                    }
+                } catch (NumberFormatException ea) {
+                    JOptionPane.showMessageDialog(columnpanel, "Id must be a number!", "id must be number",
+                            JOptionPane.WARNING_MESSAGE);
+                    columnpanel.removeAll();
+                    columnpanel.revalidate();
+                }
+
 
             }
         });
@@ -305,7 +331,12 @@ public class LibrarianWindow extends JFrame {
                         .collect(Collectors.toList());
 
                 columnpanel.removeAll();
-                printCatalogue(columnpanel, listOfDamagedBooks);
+                if (booksList.isEmpty()) {
+                    JOptionPane.showMessageDialog(columnpanel, "There are no demaged books", "No such id",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else{
+                    printCatalogue(columnpanel, booksList);
+                }
 
             }
         });

@@ -381,7 +381,13 @@ public class ReaderWindow extends JFrame {
                 List<Book> booksList = librarySystem.getCatalogue().searchByTitle(titleText);
 
                 columnpanel.removeAll();
-                printCatalogue(columnpanel, booksList);
+                columnpanel.revalidate();
+                if (booksList.isEmpty()) {
+                    JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there is no book with the title '" + titleText
+                            + "' in our collection", "No such title", JOptionPane.INFORMATION_MESSAGE);
+                } else{
+                    printCatalogue(columnpanel, booksList);
+                }
 
             }
         });
@@ -413,7 +419,13 @@ public class ReaderWindow extends JFrame {
                 booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
 
                 columnpanel.removeAll();
-                printCatalogue(columnpanel, booksList);
+                columnpanel.revalidate();
+                if (booksList.isEmpty()) {
+                    JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there are no books by '" + authorText
+                            + "' in our collection", "No such author", JOptionPane.INFORMATION_MESSAGE);
+                } else{
+                    printCatalogue(columnpanel, booksList);
+                }
 
             }
         });
