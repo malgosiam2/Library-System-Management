@@ -269,7 +269,7 @@ public class LibrarianWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int id = Integer.parseInt(idSearchField.getText());
-                authorSearchField.setText("");
+                idSearchField.setText("");
                 List<Book> booksList = librarySystem.getCatalogue().searchById(id);
                 booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
 
