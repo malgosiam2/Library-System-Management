@@ -1,11 +1,7 @@
 package pl.edu.pw.mini.zpoif.zespol9.Testy;
 
-import pl.edu.pw.mini.zpoif.zespol9.Book.Book;
+import pl.edu.pw.mini.zpoif.zespol9.Book.*;
 
-import pl.edu.pw.mini.zpoif.zespol9.Book.BookFormat;
-import pl.edu.pw.mini.zpoif.zespol9.Book.Genre;
-
-import pl.edu.pw.mini.zpoif.zespol9.Book.Status;
 import pl.edu.pw.mini.zpoif.zespol9.People.Reader;
 
 import pl.edu.pw.mini.zpoif.zespol9.System.LibrarySystem;
@@ -25,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class ReaderWindow extends JFrame {
@@ -177,23 +174,33 @@ public class ReaderWindow extends JFrame {
         JRadioButton authorSortButton = new JRadioButton("Sort by Author");
         JRadioButton titleSortButton = new JRadioButton("Sort by Title");
         JRadioButton ratingSortButton = new JRadioButton("Sort by Rating");
+        JRadioButton top10booksButton = new JRadioButton("Show TOP 10 from: ");
+        JRadioButton ebooksButton = new JRadioButton("Show e-books");
 
         authorSortButton.setBounds(20, 100, 200, 25);
         titleSortButton.setBounds(20, 130, 200, 25);
         ratingSortButton.setBounds(20, 160, 200, 25);
+        top10booksButton.setBounds(300, 100, 200, 25);
+        ebooksButton.setBounds(300, 130, 200, 25);
 
         authorSortButton.setFont(font);
         titleSortButton.setFont(font);
         ratingSortButton.setFont(font);
+        top10booksButton.setFont(font);
+        ebooksButton.setFont(font);
 
         authorSortButton.setBackground(new Color(190, 172, 150, 255));
         titleSortButton.setBackground(new Color(190, 172, 150, 255));
         ratingSortButton.setBackground(new Color(190, 172, 150, 255));
+        top10booksButton.setBackground(new Color(190, 172, 150, 255));
+        ebooksButton.setBackground(new Color(190, 172, 150, 255));
 
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(authorSortButton);
         buttonGroup.add(titleSortButton);
         buttonGroup.add(ratingSortButton);
+        buttonGroup.add(top10booksButton);
+        buttonGroup.add(ebooksButton);
 
         authorSortButton.setSelected(true);
 
@@ -221,9 +228,34 @@ public class ReaderWindow extends JFrame {
             }
         });
 
+        top10booksButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                columnpanel.removeAll();
+                columnpanel.revalidate();
+            }
+        });
+
+        ebooksButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                columnpanel.removeAll();
+                columnpanel.revalidate();
+            }
+        });
+
+        Genre[] options = new Genre[Genre.values().length + 1];
+        options[0] = null;
+        System.arraycopy(Genre.values(), 0, options, 1, Genre.values().length);
+        JComboBox<Genre> genreJComboBox = new JComboBox<>(options);
+        genreJComboBox.setBounds(520, 100, 230, 25);
+
         upperPanel.add(authorSortButton);
         upperPanel.add(titleSortButton);
         upperPanel.add(ratingSortButton);
+        upperPanel.add(top10booksButton);
+        upperPanel.add(genreJComboBox);
+        upperPanel.add(ebooksButton);
 
 
         //display button
@@ -237,12 +269,33 @@ public class ReaderWindow extends JFrame {
 
                 if (authorSortButton.isSelected()) {
                     booksList.sort(Comparator.comparing(book -> book.author.toLowerCase()));
+                    printCatalogue(columnpanel, booksList);
+
                 } else if (titleSortButton.isSelected()) {
                     booksList.sort(Comparator.comparing(book -> book.title.toLowerCase()));
+                    printCatalogue(columnpanel, booksList);
+
                 } else if (ratingSortButton.isSelected()) {
                     booksList.sort((book1, book2) -> Double.compare(book2.bookRating, book1.bookRating));
+                    printCatalogue(columnpanel, booksList);
+
+                } else if (top10booksButton.isSelected()){
+                    Genre selectedGenre = (Genre) genreJComboBox.getSelectedItem();
+                    genreJComboBox.setSelectedIndex(0);
+
+                    List<Book> TOP10booksList = booksList.stream()
+                            .filter(book -> book.genre.equals(selectedGenre))
+                            .sorted((book1, book2) -> Double.compare(book2.bookRating, book1.bookRating))
+                            .limit(10).collect(Collectors.toList());
+                    printCatalogue(columnpanel, TOP10booksList);
+
+                } else if (ebooksButton.isSelected()) {
+                    List<Book> ebooksList = booksList.stream()
+                            .filter(book -> book.bookFormat.equals(BookFormat.Ebook))
+                            .sorted(Comparator.comparing(book -> book.title.toLowerCase()))
+                            .collect(Collectors.toList());
+                    printCatalogue(columnpanel, ebooksList);
                 }
-                printCatalogue(columnpanel, booksList);
             }
         });
         upperPanel.add(displayButton);
