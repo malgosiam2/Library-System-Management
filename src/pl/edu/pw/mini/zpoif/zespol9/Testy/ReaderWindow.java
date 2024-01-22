@@ -279,7 +279,7 @@ public class ReaderWindow extends JFrame {
                     booksList.sort((book1, book2) -> Double.compare(book2.bookRating, book1.bookRating));
                     printCatalogue(columnpanel, booksList);
 
-                } else if (top10booksButton.isSelected()){
+                } else if (top10booksButton.isSelected()) {
                     Genre selectedGenre = (Genre) genreJComboBox.getSelectedItem();
                     genreJComboBox.setSelectedIndex(0);
 
@@ -385,7 +385,7 @@ public class ReaderWindow extends JFrame {
                 if (booksList.isEmpty()) {
                     JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there is no book with the title '" + titleText
                             + "' in our collection", "No such title", JOptionPane.INFORMATION_MESSAGE);
-                } else{
+                } else {
                     printCatalogue(columnpanel, booksList);
                 }
 
@@ -423,7 +423,7 @@ public class ReaderWindow extends JFrame {
                 if (booksList.isEmpty()) {
                     JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there are no books by '" + authorText
                             + "' in our collection", "No such author", JOptionPane.INFORMATION_MESSAGE);
-                } else{
+                } else {
                     printCatalogue(columnpanel, booksList);
                 }
 

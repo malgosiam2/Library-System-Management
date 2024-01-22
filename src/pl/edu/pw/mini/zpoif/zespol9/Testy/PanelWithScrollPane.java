@@ -28,7 +28,7 @@ public class PanelWithScrollPane extends JPanel {
     private String button1;
     private String button2;
 
-    public PanelWithScrollPane(String panel, JPanel jPanel1, JPanel jPanel2, Reader myReader, Librarian librarian, String title1, String title2, String button1, String button2){
+    public PanelWithScrollPane(String panel, JPanel jPanel1, JPanel jPanel2, Reader myReader, Librarian librarian, String title1, String title2, String button1, String button2) {
 
         this.myReader = myReader;
         this.jPanel2 = jPanel2;
@@ -41,7 +41,7 @@ public class PanelWithScrollPane extends JPanel {
         this.button2 = button2;
     }
 
-    public PanelWithScrollPane(String panel, JPanel jPanel, Reader myReader, String title1, String button1){
+    public PanelWithScrollPane(String panel, JPanel jPanel, Reader myReader, String title1, String button1) {
         this.panel = panel;
         this.jPanel1 = jPanel;
         this.myReader = myReader;
@@ -50,7 +50,7 @@ public class PanelWithScrollPane extends JPanel {
     }
 
 
-    public void createSinglePanel(){
+    public void createSinglePanel() {
 
         Font font1 = new Font("Serif", Font.BOLD, 16);
         DefaultListModel<PanelWithScrollPane.ClassWithComponentsToBePrinted> defaultListModel = new DefaultListModel<>();
@@ -63,11 +63,11 @@ public class PanelWithScrollPane extends JPanel {
         List<Book> listReader = this.myReader.getReservedBooks();
 
         List<PanelWithScrollPane.ClassWithComponentsToBePrinted> toBePrinted = new ArrayList<>();
-        for (Book book: listReader) {
+        for (Book book : listReader) {
             toBePrinted.add(new PanelWithScrollPane.ClassWithComponentsToBePrinted(book));
         }
 
-        for (int i = 0; i < listReader.size(); i ++){
+        for (int i = 0; i < listReader.size(); i++) {
             defaultListModel.addElement(toBePrinted.get(i));
         }
 
@@ -82,11 +82,11 @@ public class PanelWithScrollPane extends JPanel {
                     PanelWithScrollPane.ClassWithComponentsToBePrinted selectedBook = defaultListModel.getElementAt(selectedIndex);
                     Book book = selectedBook.book;
 
-                    if (panel.equals("reader")){
+                    if (panel.equals("reader")) {
 
                         int choice = JOptionPane.showConfirmDialog(jPanel1, "Are you sure you want to delete this book?", "Confirmation", JOptionPane.YES_NO_OPTION);
 
-                        if (choice == JOptionPane.YES_NO_OPTION){
+                        if (choice == JOptionPane.YES_NO_OPTION) {
                             myReader.deleteReservedBook(book);
                             defaultListModel.remove(selectedIndex);
                             jPanel1.revalidate();
@@ -124,7 +124,7 @@ public class PanelWithScrollPane extends JPanel {
     }
 
 
-    public void createPanel(){
+    public void createPanel() {
         DefaultListModel<PanelWithScrollPane.ClassWithComponentsToBePrinted> defaultListModel = new DefaultListModel<>();
         DefaultListModel<PanelWithScrollPane.ClassWithComponentsToBePrinted> defaultListModel1 = new DefaultListModel<>();
 
@@ -136,18 +136,18 @@ public class PanelWithScrollPane extends JPanel {
         jPanel1.setLayout(new FlowLayout());
 
         List<Book> listReader;
-        if (panel.equals("reader")){
+        if (panel.equals("reader")) {
             listReader = myReader.getToReadBooks();
         } else {
             listReader = myReader.getReservedBooks();
         }
 
         List<PanelWithScrollPane.ClassWithComponentsToBePrinted> toBePrinted = new ArrayList<>();
-        for (Book book: listReader) {
+        for (Book book : listReader) {
             toBePrinted.add(new PanelWithScrollPane.ClassWithComponentsToBePrinted(book));
         }
 
-        for (int i = 0; i < listReader.size(); i ++){
+        for (int i = 0; i < listReader.size(); i++) {
             defaultListModel.addElement(toBePrinted.get(i));
         }
 
@@ -163,10 +163,10 @@ public class PanelWithScrollPane extends JPanel {
                     PanelWithScrollPane.ClassWithComponentsToBePrinted selectedBook = defaultListModel.getElementAt(selectedIndex);
                     Book book = selectedBook.book;
 
-                    if (panel.equals("reader")){
+                    if (panel.equals("reader")) {
                         int choice = JOptionPane.showConfirmDialog(jPanel1, "Are you sure you want to delete this book?", "Confirmation", JOptionPane.YES_NO_OPTION);
 
-                        if (choice == JOptionPane.YES_NO_OPTION){
+                        if (choice == JOptionPane.YES_NO_OPTION) {
                             myReader.deleteToReadBook(book);
                             defaultListModel.remove(selectedIndex);
                             jPanel1.revalidate();
@@ -174,8 +174,7 @@ public class PanelWithScrollPane extends JPanel {
 
                             JOptionPane.showMessageDialog(jPanel1, "<html>This book has been successfully deleted from to read books!</html>");
                         }
-                    }
-                    else {
+                    } else {
 
                         try {
                             librarian.CheckOutBookFromReservedBooks(myReader.getSignInData().getLogin(), book);
@@ -227,7 +226,7 @@ public class PanelWithScrollPane extends JPanel {
             toBePrinted1.add(new PanelWithScrollPane.ClassWithComponentsToBePrinted(entry.getKey(), entry.getValue()));
         }
 
-        for (int i = 0; i < mapReader.size(); i ++){
+        for (int i = 0; i < mapReader.size(); i++) {
             defaultListModel1.addElement(toBePrinted1.get(i));
         }
 
@@ -244,18 +243,17 @@ public class PanelWithScrollPane extends JPanel {
                     PanelWithScrollPane.ClassWithComponentsToBePrinted selectedBook = defaultListModel1.getElementAt(selectedIndex);
                     Book book = selectedBook.book;
 
-                    if (panel.equals("reader")){
+                    if (panel.equals("reader")) {
                         boolean postpone = myReader.postponeReturnDate(book);
-                        if (postpone){
+                        if (postpone) {
                             PanelWithScrollPane.ClassWithComponentsToBePrinted x = new PanelWithScrollPane.ClassWithComponentsToBePrinted(book, myReader.getCheckedOutBooks().get(book));
                             defaultListModel1.setElementAt(x, selectedIndex);
                             JOptionPane.showMessageDialog(jPanel1, "<html>You have successfully postponed the return date!");
-                        }
-                        else {
+                        } else {
                             JOptionPane.showMessageDialog(jPanel1, "<html>You cannot postpone a book twice!");
                         }
 
-                    }else {
+                    } else {
                         try {
                             librarian.acceptBookReturn(myReader.getSignInData().getLogin(), book, book.bookCondition);
                             defaultListModel1.remove(selectedIndex);
@@ -294,7 +292,7 @@ public class PanelWithScrollPane extends JPanel {
         jPanel2.add(scrollPane1);
     }
 
-    public class ClassWithComponentsToBePrinted{
+    public class ClassWithComponentsToBePrinted {
 
         public Book book;
 
@@ -303,7 +301,7 @@ public class PanelWithScrollPane extends JPanel {
         public String data;
         public String pusty;
 
-        public ClassWithComponentsToBePrinted(Book book, LocalDate localDate){
+        public ClassWithComponentsToBePrinted(Book book, LocalDate localDate) {
             this.book = book;
             this.tytul = book.title;
             this.autor = book.author;
@@ -311,7 +309,7 @@ public class PanelWithScrollPane extends JPanel {
             this.pusty = " ";
         }
 
-        public ClassWithComponentsToBePrinted(Book book){
+        public ClassWithComponentsToBePrinted(Book book) {
             this.book = book;
             this.tytul = book.title;
             this.autor = book.author;
@@ -321,7 +319,7 @@ public class PanelWithScrollPane extends JPanel {
 
     }
 
-    class  PrintInFourRows extends JPanel implements ListCellRenderer<PanelWithScrollPane.ClassWithComponentsToBePrinted>{
+    class PrintInFourRows extends JPanel implements ListCellRenderer<PanelWithScrollPane.ClassWithComponentsToBePrinted> {
         private JLabel titleLabel;
         private JLabel authorLabel;
         private JLabel dataLabel;

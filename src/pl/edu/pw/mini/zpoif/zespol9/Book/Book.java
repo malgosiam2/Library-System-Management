@@ -39,7 +39,7 @@ public class Book {
 
     }
 
-    public Book(String title, String author, String description, double bookRating, Genre genre, BookFormat bookFormat){
+    public Book(String title, String author, String description, double bookRating, Genre genre, BookFormat bookFormat) {
         this.title = title;
         this.author = author;
         this.description = description;
@@ -49,7 +49,7 @@ public class Book {
         this.bookCondition = BookCondition.AsNew;
         this.status = Status.Available;
         id = count;
-        count ++;
+        count++;
     }
 
 
