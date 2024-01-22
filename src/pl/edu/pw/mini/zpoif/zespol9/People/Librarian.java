@@ -39,7 +39,7 @@ public class Librarian extends Person implements CheckOutDesk {
         Reader reader = systemAccess.getReader(login);
         if (book.status == Status.Available) {
             book.status = Status.CheckedOut;
-            reader.getCheckedOutBooks().put(book, LocalDate.now());
+            reader.getCheckedOutBooks().put(book, LocalDate.now().plusDays(30));
             return true;
         } else {
             return false;

@@ -211,7 +211,7 @@ public class LibrarianWindow extends JFrame {
                 if (booksList.isEmpty()) {
                     JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there is no book with the title '" + titleText
                             + "' in our collection", "No such title", JOptionPane.INFORMATION_MESSAGE);
-                } else{
+                } else {
                     printCatalogue(columnpanel, booksList);
                 }
 
@@ -250,7 +250,7 @@ public class LibrarianWindow extends JFrame {
                 if (booksList.isEmpty()) {
                     JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there are no books by '" + authorText
                             + "' in our collection", "No such author", JOptionPane.INFORMATION_MESSAGE);
-                } else{
+                } else {
                     printCatalogue(columnpanel, booksList);
                 }
             }
@@ -288,7 +288,7 @@ public class LibrarianWindow extends JFrame {
                     if (booksList.isEmpty()) {
                         JOptionPane.showMessageDialog(columnpanel, "We're sorry, but there is no book with " + id
                                 + " id number in our collection", "No such id", JOptionPane.INFORMATION_MESSAGE);
-                    } else{
+                    } else {
                         printCatalogue(columnpanel, booksList);
                     }
                 } catch (NumberFormatException ea) {
@@ -326,13 +326,12 @@ public class LibrarianWindow extends JFrame {
                         .filter(book -> book.bookCondition.equals(BookCondition.Damaged))
                         .sorted(Comparator.comparing(book -> book.title.toLowerCase()))
                         .collect(Collectors.toList());
-
                 columnpanel.removeAll();
-                if (booksList.isEmpty()) {
+                if (listOfDamagedBooks.isEmpty()) {
                     JOptionPane.showMessageDialog(columnpanel, "There are no demaged books", "No such id",
                             JOptionPane.INFORMATION_MESSAGE);
-                } else{
-                    printCatalogue(columnpanel, booksList);
+                } else {
+                    printCatalogue(columnpanel, listOfDamagedBooks);
                 }
 
             }
@@ -402,7 +401,7 @@ public class LibrarianWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int choice = JOptionPane.showConfirmDialog(rowPanel, "Are you sure you want to delete this book?", "Confirmation", JOptionPane.YES_NO_OPTION);
 
-                if (choice == JOptionPane.YES_NO_OPTION){
+                if (choice == JOptionPane.YES_NO_OPTION) {
                     librarian.deleteBook(book);
 
                     rowPanel.removeAll();
@@ -425,7 +424,7 @@ public class LibrarianWindow extends JFrame {
     }
 
 
-    private void implementAddBook(JPanel jPanel){
+    private void implementAddBook(JPanel jPanel) {
         jPanel.setLayout(new FlowLayout());
         jPanel.setBackground(new Color(238, 232, 223, 255));
 
@@ -527,7 +526,6 @@ public class LibrarianWindow extends JFrame {
         jPanelGenre.add(comboBox);
 
 
-
         jPanelBookFormat.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel tekst6 = new JLabel("Book Format:");
         tekst6.setFont(font);
@@ -553,14 +551,13 @@ public class LibrarianWindow extends JFrame {
                 Genre genre = (Genre) comboBox.getSelectedItem();
                 BookFormat bookFormat = (BookFormat) comboBoxBookFormat.getSelectedItem();
 
-                if (title.equals("") | author.equals("") | description.equals("") | String.valueOf(rating).equals("")){
+                if (title.equals("") | author.equals("") | description.equals("") | String.valueOf(rating).equals("")) {
                     JOptionPane.showMessageDialog(LibrarianWindow.this, "Please fill in all the fields!");
-                }
-                else {
+                } else {
                     double ratingDouble;
                     try {
                         ratingDouble = Double.parseDouble(rating);
-                        if (ratingDouble >= 0 & ratingDouble <= 5){
+                        if (ratingDouble >= 0 & ratingDouble <= 5) {
                             Book book = new Book(title, author, description, ratingDouble, genre, bookFormat);
                             librarian.addBook(book);
                             JOptionPane.showMessageDialog(LibrarianWindow.this, "You have successfully added a book!");
@@ -568,11 +565,10 @@ public class LibrarianWindow extends JFrame {
                             field2.setText("");
                             field3.setText("");
                             field4.setText("");
-                        }
-                        else {
+                        } else {
                             JOptionPane.showMessageDialog(LibrarianWindow.this, "Book rating should be less or equal 5 and bigger or equal 0!");
                         }
-                    }catch (NumberFormatException exception){
+                    } catch (NumberFormatException exception) {
                         JOptionPane.showMessageDialog(LibrarianWindow.this, "Book Rating must be a number!");
                     }
                 }
@@ -596,7 +592,7 @@ public class LibrarianWindow extends JFrame {
         jPanel.repaint();
     }
 
-    private void implementAddUser(JPanel jPanel){
+    private void implementAddUser(JPanel jPanel) {
 
         jPanel.setLayout(new FlowLayout());
         jPanel.setBackground(new Color(238, 232, 223, 255));
@@ -651,10 +647,9 @@ public class LibrarianWindow extends JFrame {
                 String name = field1.getText();
                 String surname = field2.getText();
 
-                if (name.equals("") | surname.equals("")){
+                if (name.equals("") | surname.equals("")) {
                     JOptionPane.showMessageDialog(LibrarianWindow.this, "Please fill in all the fields");
-                }
-                else {
+                } else {
                     SignInData signInData = librarian.addUser(name, surname);
                     String login = signInData.getLogin();
                     String password;
@@ -690,7 +685,7 @@ public class LibrarianWindow extends JFrame {
 
     }
 
-    private void implementLibraryManagement(JPanel jPanel){
+    private void implementLibraryManagement(JPanel jPanel) {
         jPanel.setLayout(new GridLayout(3, 1));
 
         Font font = new Font("Serif", Font.BOLD, 18);
