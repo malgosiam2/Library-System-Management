@@ -326,13 +326,12 @@ public class LibrarianWindow extends JFrame {
                         .filter(book -> book.bookCondition.equals(BookCondition.Damaged))
                         .sorted(Comparator.comparing(book -> book.title.toLowerCase()))
                         .collect(Collectors.toList());
-
                 columnpanel.removeAll();
-                if (booksList.isEmpty()) {
+                if (listOfDamagedBooks.isEmpty()) {
                     JOptionPane.showMessageDialog(columnpanel, "There are no demaged books", "No such id",
                             JOptionPane.INFORMATION_MESSAGE);
                 } else{
-                    printCatalogue(columnpanel, booksList);
+                    printCatalogue(columnpanel, listOfDamagedBooks);
                 }
 
             }
