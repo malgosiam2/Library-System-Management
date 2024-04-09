@@ -1,4 +1,4 @@
-Projekt 'Library System Management'
+##Projekt 'Library System Management'
 Implementacja systemu do obsługi biblioteki, zarówno z perspektywy bibliotekarza jak i czytelnika.
 
 Szczegółowe informacje, w tym opis funkcjonalności można znaleźć w pliku [Dokumentacja](https://github.com/malgosiam2/Library-System-Management/blob/master/Dokumentacja.docx)
